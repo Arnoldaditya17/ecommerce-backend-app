@@ -5,6 +5,7 @@ import com.aditya.ecommerce_backend_app.dto.UserDto;
 import com.aditya.ecommerce_backend_app.enums.UserRole;
 import com.aditya.ecommerce_backend_app.models.User;
 import com.aditya.ecommerce_backend_app.repositories.UserRepository;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,12 +28,33 @@ public class AuthServiceImpl implements AuthService {
 
         UserDto userDto = new UserDto();
         userDto.setId(createdUser.getId());
+        userDto.setEmail(createdUser.getEmail());
+        userDto.setName(createdUser.getName());
+        userDto.setUserRole(createdUser.getRole());
+
         return userDto;
 
     }
     public Boolean hasUserWithEmail(String email) {
         return userRepository.findFirstByEmail(email).isPresent();
     }
+
+    @PostConstruct
+    public void createAdminAccount()
+    {
+        User adminAccount = userRepository.findByRole(UserRole.ADMIN);
+        if(null == adminAccount)
+        {
+            User user = new User();
+            user.setEmail("admin@aditya.com");
+            user.setName("admin");
+            user.setRole(UserRole.ADMIN);
+            user.setPassword(new BCryptPasswordEncoder().encode("admin"));
+            userRepository.save(user);
+        }
+
+    }
+
 
 
 }

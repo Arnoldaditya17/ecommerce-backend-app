@@ -4,6 +4,7 @@ import com.aditya.ecommerce_backend_app.models.RefreshToken;
 import com.aditya.ecommerce_backend_app.models.User;
 import com.aditya.ecommerce_backend_app.repositories.RefreshTokenRepository;
 import com.aditya.ecommerce_backend_app.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -14,8 +15,9 @@ import java.util.UUID;
 @Service
 public class RefreshTokenService {
 
-
+@Autowired
     RefreshTokenRepository refreshTokenRepository;
+@Autowired
     UserRepository userRepository;
 
     public RefreshToken createRefreshToken(String username) {
@@ -37,6 +39,7 @@ public class RefreshTokenService {
 
     public Optional<RefreshToken> findByToken(String token){
         return refreshTokenRepository.findByToken(token);
+
     }
 
     public RefreshToken verifyExpiration(RefreshToken token){

@@ -3,6 +3,7 @@ package com.aditya.ecommerce_backend_app.models;
 import com.aditya.ecommerce_backend_app.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 @Data
 @Entity
@@ -20,8 +21,8 @@ public class User {
 
     private UserRole role;
 
-    @Lob
-    @Column(columnDefinition = "bytea")
+
+    @Column( name = "userProfile", columnDefinition = "bytea")
     private byte[] img;
 
 

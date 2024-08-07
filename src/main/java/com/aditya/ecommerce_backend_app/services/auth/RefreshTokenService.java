@@ -5,6 +5,7 @@ import com.aditya.ecommerce_backend_app.models.User;
 import com.aditya.ecommerce_backend_app.repositories.RefreshTokenRepository;
 import com.aditya.ecommerce_backend_app.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +16,12 @@ import java.util.UUID;
 @Service
 public class RefreshTokenService {
 
-@Autowired
+    @Autowired
     RefreshTokenRepository refreshTokenRepository;
-@Autowired
+    @Autowired
     UserRepository userRepository;
 
+@Cacheable(value = "refreshToken", key = "#username")
     public RefreshToken createRefreshToken(String username) {
         Optional<User> userOptional = userRepository.findFirstByEmail(username);
 
@@ -36,6 +38,7 @@ public class RefreshTokenService {
 
         return refreshTokenRepository.save(refreshToken);
     }
+
 
     public Optional<RefreshToken> findByToken(String token){
         return refreshTokenRepository.findByToken(token);

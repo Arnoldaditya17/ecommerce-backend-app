@@ -138,6 +138,8 @@ public class AuthController {
                 .map(user -> {
                     String accessToken = jwtUtils.generateToken(user.getEmail());
                     return JwtResponseDTO.builder()
+                            .userId(user.getId())
+                            .role(user.getRole())
                             .accessToken(accessToken)
                             .refreshToken(refreshTokenRequestDTO.getRefreshToken()).build();
                 }).orElseThrow(() ->new RuntimeException("Refresh Token is not in DB..!!"));

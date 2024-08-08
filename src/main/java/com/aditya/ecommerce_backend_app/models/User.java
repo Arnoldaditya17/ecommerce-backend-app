@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.Type;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "users")
@@ -20,6 +22,9 @@ public class User {
     private String name;
 
     private UserRole role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
 
 
     @Column( name = "userProfile", columnDefinition = "bytea")

@@ -1,5 +1,6 @@
 package com.aditya.ecommerce_backend_app.utils;
 
+import com.aditya.ecommerce_backend_app.repositories.TokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -16,6 +17,12 @@ import java.util.function.Function;
 @Component
 public class JwtUtils {
     public static final String SECRET = "357638792F423F4428472B4B6250655368566D597133743677397A2443264629";
+    private final TokenRepository tokenRepository;
+
+    public JwtUtils(TokenRepository tokenRepository) {
+        this.tokenRepository = tokenRepository;
+    }
+
     public String generateToken(String userName)
     {
         Map<String, Object> claims = new HashMap<>();
@@ -78,7 +85,8 @@ public class JwtUtils {
     public Boolean validateToken(String token, UserDetails userDetails)
     {
         final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        boolean isValidToken = tokenRepository.findByToken(token).map(t -> !t.isLoggedOut()).orElse(false);
+        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token)&& isValidToken);
     }
 
 

@@ -21,7 +21,7 @@ public class RefreshTokenService {
     @Autowired
     UserRepository userRepository;
 
-@Cacheable(value = "refreshToken", key = "#username")
+//@Cacheable(value = "refreshToken", key = "#username")
     public RefreshToken createRefreshToken(String username) {
         Optional<User> userOptional = userRepository.findFirstByEmail(username);
 

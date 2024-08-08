@@ -2,18 +2,17 @@ package com.aditya.ecommerce_backend_app.controllers;
 import com.aditya.ecommerce_backend_app.dto.*;
 import com.aditya.ecommerce_backend_app.exceptions.ErrorResponse;
 import com.aditya.ecommerce_backend_app.models.RefreshToken;
+import com.aditya.ecommerce_backend_app.models.Token;
 import com.aditya.ecommerce_backend_app.models.User;
+import com.aditya.ecommerce_backend_app.repositories.TokenRepository;
 import com.aditya.ecommerce_backend_app.repositories.UserRepository;
 import com.aditya.ecommerce_backend_app.services.auth.AuthService;
 import com.aditya.ecommerce_backend_app.services.auth.RefreshTokenService;
 import com.aditya.ecommerce_backend_app.utils.JwtUtils;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,7 +23,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import java.io.IOException;
+
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -44,50 +44,8 @@ public class AuthController {
 
     public final AuthService authService;
     public final RefreshTokenService refreshTokenService;
+    private final TokenRepository tokenRepository;
 
-
-
-
-//    @PostMapping("/authenticate")
-//    public void createUser(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response) throws IOException, JSONException {
-//        try {
-//            // Authenticate user credentials
-//            authenticationManager.authenticate(
-//                    new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
-//            );
-//        } catch (BadCredentialsException e) {
-//            // Handle invalid credentials
-//            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//            response.getWriter().write(new JSONObject().put("error", "Invalid email or password").toString());
-//            return;
-//        }
-//
-//        // Load user details and find user by email
-//        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-//        Optional<User> optionalUser = userRepository.findFirstByEmail(userDetails.getUsername());
-//
-//        if (optionalUser.isPresent()) {
-//            User user = optionalUser.get();
-//            // Generate JWT token
-//            final String jwt = jwtUtils.generateToken(userDetails.getUsername());
-//
-//            // Create JSON response
-//            JSONObject jsonResponse = new JSONObject();
-//            jsonResponse.put("userId", user.getId());
-//            jsonResponse.put("role", user.getRole());
-//            jsonResponse.put("Access-Token", jwt);
-//
-//            // Write JSON response
-//            response.setStatus(HttpServletResponse.SC_OK);
-//            response.setContentType("application/json");
-//            response.getWriter().write(jsonResponse.toString());
-//            response.addHeader(HEADER_STRING, TOKEN_PREFIX + jwt);
-//        } else {
-//            // Handle case where user is not found
-//            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-//            response.getWriter().write(new JSONObject().put("error", "User not found").toString());
-//        }
-//    }
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateAndGetToken(@Valid @RequestBody AuthenticationRequest authenticationRequest) {
@@ -108,6 +66,8 @@ public class AuthController {
                     // Generate tokens
                     final String jwt = jwtUtils.generateToken(userDetails.getUsername());
                     RefreshToken refreshToken = refreshTokenService.createRefreshToken(authenticationRequest.getUsername());
+                    revokeAllTokenByUser(user);
+                    saveUserToken(user, jwt);
 
                     // Create response DTO
                     JwtResponseDTO jwtResponse = JwtResponseDTO.builder()
@@ -127,6 +87,23 @@ public class AuthController {
         } catch (BadCredentialsException e) {
             return new ResponseEntity<>(new ErrorResponse("Invalid email or password"), HttpStatus.UNAUTHORIZED);
         }
+    }
+
+    private void revokeAllTokenByUser(User user) {
+        List<Token> validTokenListByUser=tokenRepository.findAllTokenByUser(Math.toIntExact(user.getId()));
+        if(!validTokenListByUser.isEmpty()){
+            validTokenListByUser.forEach(token -> {
+                token.setLoggedOut(true);});
+        }
+        tokenRepository.saveAll(validTokenListByUser);
+    }
+
+    private void saveUserToken(User user, String jwt) {
+        Token token=new Token();
+        token.setUser(user);
+        token.setToken(jwt);
+        token.setLoggedOut(false);
+        tokenRepository.save(token);
     }
 
 
@@ -167,6 +144,12 @@ public class AuthController {
                 return new ResponseEntity<>("An error occurred while creating the user", HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
+
+
+
+
+
+
 
 
 

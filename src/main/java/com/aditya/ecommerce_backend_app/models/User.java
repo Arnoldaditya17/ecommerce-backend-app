@@ -23,6 +23,8 @@ public class User {
 
     private UserRole role;
 
+    private String phone;
+
     @OneToMany(mappedBy = "user")
     private List<Token> tokens;
 

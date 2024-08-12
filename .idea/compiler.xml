@@ -7,13 +7,22 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="ecommerce-backend-app" />
+        <module name="ecom-common" />
+        <module name="ecom-user" />
+        <module name="ecom-app-boot" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ecom-auth" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="ecommerce-backend-app" options="-parameters" />
+      <module name="ecom-app-boot" options="-parameters" />
+      <module name="ecom-auth" options="-parameters" />
+      <module name="ecom-common" options="-parameters" />
+      <module name="ecom-user" options="-parameters" />
+      <module name="ecommerce-backend-app" options="" />
     </option>
   </component>
 </project>

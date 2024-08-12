@@ -1,2 +1,2 @@
 # Ignore application.properties
-src/main/resources/application.properties
+ecom-app-boot/src/main/resources/application.properties

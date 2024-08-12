@@ -36,22 +36,29 @@
     <properties>
         <java.version>17</java.version>
     </properties>
-    <dependencies>
-        <dependency>
-            <groupId>com.aditya.tech.app-boot</groupId>
-            <artifactId>ecom-app-boot</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.aditya.tech.common</groupId>
-            <artifactId>ecom-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.aditya.tech.user</groupId>
-            <artifactId>ecom-user</artifactId>
-        </dependency>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.aditya.tech.app</groupId>
+                <artifactId>ecom-app-boot</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.aditya.tech.app</groupId>
+                <artifactId>ecom-common</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.aditya.tech.app</groupId>
+                <artifactId>ecom-user</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
 
 
-    </dependencies>
+        </dependencies>
+
+    </dependencyManagement>
 
 
 </project>

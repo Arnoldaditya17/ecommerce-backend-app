@@ -9,7 +9,8 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.aditya.tech.app-boot</groupId>
+
+    <groupId>com.aditya.tech.app</groupId>
     <artifactId>ecom-app-boot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
@@ -20,25 +21,7 @@
     </properties>
     <dependencies>
 
-
     </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>com.aditya.tech.EcommerceBackendAppApplication</mainClass>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
+
 
 </project>

@@ -8,7 +8,8 @@
         <artifactId>ecommerce-backend-app</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-<groupId>com.aditya.tech.common</groupId>
+    <packaging>jar</packaging>
+<groupId>com.aditya.tech.app</groupId>
     <artifactId>ecom-common</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 

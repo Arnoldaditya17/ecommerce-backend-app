@@ -2,16 +2,19 @@ package com.aditya.config;
 
 
 
-import com.aditya.model.Token;
-import com.aditya.repository.TokenRepository;
+import com.aditya.models.Token;
+import com.aditya.repositories.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CustomLogoutHandler implements LogoutHandler {
+
+
     private final TokenRepository tokenRepository;
 
     public CustomLogoutHandler(TokenRepository tokenRepository) {

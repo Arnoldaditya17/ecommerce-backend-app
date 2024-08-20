@@ -1,2 +1,2 @@
 # Ignore application.properties
-src/main/resources/application.properties
+app-starter/src/main/resources/application.properties

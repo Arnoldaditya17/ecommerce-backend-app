@@ -18,9 +18,6 @@
 
     <modules>
         <module>app-starter</module>
-        <module>domain-core</module>
-        <module>service-core</module>
-        <module>repository-core</module>
         <module>user-service</module>
         <module>config-server</module>
         <module>common-utils</module>
@@ -32,7 +29,6 @@
         <module>cart-service</module>
         <module>order-service</module>
         <module>admin-service</module>
-
     </modules>
 
     <properties>
@@ -42,7 +38,13 @@
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
-
+<dependencies>
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>1.18.34</version>
+    </dependency>
+</dependencies>
 
     <dependencyManagement>
         <dependencies>
@@ -53,6 +55,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 

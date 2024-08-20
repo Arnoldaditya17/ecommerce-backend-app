@@ -8,7 +8,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="cart-service" />
-        <module name="domain-core" />
         <module name="product-service" />
         <module name="common-utils" />
         <module name="user-service" />
@@ -18,16 +17,17 @@
         <module name="inventory-service" />
         <module name="security-service" />
         <module name="app-starter" />
-        <module name="service-core" />
-        <module name="repository-core" />
         <module name="order-service" />
         <module name="admin-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="config-service" target="17" />
+      <module name="domain-core" target="17" />
       <module name="ecom-app-boot" target="17" />
       <module name="ecom-common" target="17" />
+      <module name="repository-core" target="17" />
+      <module name="service-core" target="17" />
       <module name="shipping-service" target="17" />
     </bytecodeTargetLevel>
   </component>

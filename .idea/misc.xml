@@ -10,7 +10,10 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/config-service/pom.xml" />
+        <option value="$PROJECT_DIR$/domain-core/pom.xml" />
         <option value="$PROJECT_DIR$/ecom-auth/pom.xml" />
+        <option value="$PROJECT_DIR$/repository-core/pom.xml" />
+        <option value="$PROJECT_DIR$/service-core/pom.xml" />
         <option value="$PROJECT_DIR$/shipping-service/pom.xml" />
       </set>
     </option>

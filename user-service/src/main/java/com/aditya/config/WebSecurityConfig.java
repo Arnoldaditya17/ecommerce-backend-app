@@ -34,7 +34,24 @@ public class WebSecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/login","/refreshToken","/sign-up","/order/**")
+                .requestMatchers(
+                        "/login",
+                        "/refreshToken",
+                        "/sign-up",
+                        "/order/**",
+                        "/v3/api-docs",
+                        "v2/api-docs",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html",
+                        "/v3/api-docs/**",
+                        "/swagger-resources",
+                        "/swagger-resources/**",
+                        "/webjars",
+                        "/configuration/security",
+                        "/swagger-ui.html/**",
+                        "configuration/ui")
+
+
                 .permitAll()
                 .and()
                 .authorizeHttpRequests()

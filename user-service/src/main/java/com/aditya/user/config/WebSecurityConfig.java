@@ -35,10 +35,10 @@ public class WebSecurityConfig {
                 .disable()
                 .authorizeHttpRequests()
                 .requestMatchers(
-                        "/login",
-                        "/refreshToken",
-                        "/sign-up",
-                        "/order/**",
+                        "/api/v1/users/login",
+                        "/api/v1/users/refreshToken",
+                        "/api/v1/users/sign-up",
+                        "/api/v1/orders/**",
                         "/v3/api-docs",
                         "v2/api-docs",
                         "/swagger-ui/**",

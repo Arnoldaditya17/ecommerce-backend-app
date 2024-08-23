@@ -11,9 +11,6 @@ import com.aditya.user.repositories.UserRepository;
 import com.aditya.user.services.auth.AuthService;
 import com.aditya.user.services.auth.RefreshTokenService;
 import com.aditya.user.utils.JwtUtils;
-
-
-import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +25,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +34,7 @@ import java.util.Optional;
 @RestController
 @Validated
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/users")
 @Tag(name = "Authentication")
 //@Hidden :- isko ham jab use karenge jab hame swagger ui se kisi controller ko ya request ko hide karna hoga
 public class AuthController {

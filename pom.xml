@@ -9,6 +9,7 @@
     <name>ecommerce-backend-app</name>
     <description>Demo project for Spring Boot</description>
     <url/>
+    <!--papa pom.xml-->
 
     <modules>
         <module>app-starter</module>

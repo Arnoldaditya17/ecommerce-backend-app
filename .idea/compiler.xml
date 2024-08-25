@@ -7,17 +7,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="cart-service" />
-        <module name="product-service" />
-        <module name="common-utils" />
-        <module name="user-service" />
-        <module name="notification-service" />
         <module name="config-server" />
+        <module name="cart-service" />
         <module name="payment-service" />
         <module name="inventory-service" />
         <module name="security-service" />
+        <module name="product-service" />
+        <module name="common-utils" />
         <module name="app-starter" />
+        <module name="user-service" />
         <module name="order-service" />
+        <module name="notification-service" />
         <module name="admin-service" />
       </profile>
     </annotationProcessing>

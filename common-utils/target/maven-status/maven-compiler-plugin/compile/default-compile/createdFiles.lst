@@ -4,5 +4,6 @@ com\aditya\common\dtos\CustomMessage.class
 com\aditya\common\utils\ProjectConfig.class
 com\aditya\common\Main.class
 com\aditya\common\config\AppConstants.class
+com\aditya\common\exceptions\ErrorResponse.class
 com\aditya\common\exceptions\ResourceNotFoundException.class
 com\aditya\common\exceptions\GlobalExceptionHandler.class

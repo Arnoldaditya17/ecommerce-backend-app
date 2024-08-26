@@ -2,7 +2,6 @@ E:\springboot\ecommerce-backend-app\user-service\src\main\java\com\aditya\user\d
 E:\springboot\ecommerce-backend-app\user-service\src\main\java\com\aditya\user\dto\UserDto.java
 E:\springboot\ecommerce-backend-app\user-service\src\main\java\com\aditya\user\services\auth\AuthService.java
 E:\springboot\ecommerce-backend-app\user-service\src\main\java\com\aditya\user\config\CustomLogoutHandler.java
-E:\springboot\ecommerce-backend-app\user-service\src\main\java\com\aditya\user\exceptions\GlobalExceptionHandler.java
 E:\springboot\ecommerce-backend-app\user-service\src\main\java\com\aditya\user\filters\JwtRequestFilter.java
 E:\springboot\ecommerce-backend-app\user-service\src\main\java\com\aditya\user\models\Token.java
 E:\springboot\ecommerce-backend-app\user-service\src\main\java\com\aditya\user\services\jwt\UserDetailsServiceImpl.java
@@ -20,4 +19,3 @@ E:\springboot\ecommerce-backend-app\user-service\src\main\java\com\aditya\user\r
 E:\springboot\ecommerce-backend-app\user-service\src\main\java\com\aditya\user\repositories\UserRepository.java
 E:\springboot\ecommerce-backend-app\user-service\src\main\java\com\aditya\user\services\auth\RefreshTokenService.java
 E:\springboot\ecommerce-backend-app\user-service\src\main\java\com\aditya\user\dto\JwtResponseDTO.java
-E:\springboot\ecommerce-backend-app\user-service\src\main\java\com\aditya\user\exceptions\ErrorResponse.java

@@ -21,4 +21,7 @@ public class CategoryDto {
 
     private Date created_at;
 
+    private Date updated_at;
+
+
 }

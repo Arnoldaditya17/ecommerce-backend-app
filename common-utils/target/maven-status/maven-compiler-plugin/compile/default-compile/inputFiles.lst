@@ -1,4 +1,5 @@
 E:\springboot\ecommerce-backend-app\common-utils\src\main\java\com\aditya\common\config\AppConstants.java
+E:\springboot\ecommerce-backend-app\common-utils\src\main\java\com\aditya\common\exceptions\ErrorResponse.java
 E:\springboot\ecommerce-backend-app\common-utils\src\main\java\com\aditya\common\exceptions\GlobalExceptionHandler.java
 E:\springboot\ecommerce-backend-app\common-utils\src\main\java\com\aditya\common\Main.java
 E:\springboot\ecommerce-backend-app\common-utils\src\main\java\com\aditya\common\utils\ProjectConfig.java

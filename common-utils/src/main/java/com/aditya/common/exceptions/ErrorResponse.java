@@ -1,4 +1,4 @@
-package com.aditya.user.exceptions;
+package com.aditya.common.exceptions;
 
 import lombok.Data;
 

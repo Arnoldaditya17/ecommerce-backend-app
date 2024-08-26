@@ -1,1 +1,12 @@
-com\aditya\product\models\product.class
+com\aditya\product\controller\CategoryController.class
+com\aditya\product\models\Category.class
+com\aditya\product\models\Product.class
+com\aditya\product\dtos\ProductDto.class
+com\aditya\product\services\ProductServiceImpl.class
+com\aditya\product\services\CategoryService.class
+com\aditya\product\controller\ProductController.class
+com\aditya\product\services\ProductService.class
+com\aditya\product\repositories\CategoryRepository.class
+com\aditya\product\dtos\CategoryDto.class
+com\aditya\product\services\CategoryServiceImpl.class
+com\aditya\product\repositories\ProductRepository.class

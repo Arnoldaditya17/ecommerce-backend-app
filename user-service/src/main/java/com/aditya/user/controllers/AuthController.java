@@ -2,7 +2,7 @@ package com.aditya.user.controllers;
 
 
 import com.aditya.user.dto.*;
-import com.aditya.user.exceptions.ErrorResponse;
+import com.aditya.common.exceptions.ErrorResponse;
 import com.aditya.user.models.RefreshToken;
 import com.aditya.user.models.Token;
 import com.aditya.user.models.User;

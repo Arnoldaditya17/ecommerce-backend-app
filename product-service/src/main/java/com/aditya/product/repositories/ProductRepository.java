@@ -1,4 +1,9 @@
 package com.aditya.product.repositories;
 
-public interface ProductRepository {
+import com.aditya.product.models.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ProductRepository extends JpaRepository<Product, String> {
 }

@@ -2,6 +2,7 @@ package com.aditya.product.models;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import lombok.Data;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,7 +10,8 @@ import java.util.List;
 
 @Entity
 @Data
-public class Product  {
+@Table(name = "products")
+public class ProductEntity {
 
     @Id
     private String id;
@@ -33,7 +35,7 @@ public class Product  {
     private Date updated_at;
 
     @ManyToMany
-    private List<Category> categoryList = new ArrayList<>();
+    private List<CategoryEntity> categoryList = new ArrayList<>();
 
 
 

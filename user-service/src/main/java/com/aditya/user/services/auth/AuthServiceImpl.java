@@ -6,7 +6,7 @@ import com.aditya.user.repositories.UserRepository;
 import com.aditya.user.dto.SignupRequest;
 import com.aditya.user.dto.UserDto;
 
-import com.aditya.user.models.User;
+import com.aditya.user.models.UserEntity;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,12 +21,12 @@ public class AuthServiceImpl implements AuthService {
 
     public UserDto createUser(SignupRequest signupRequest)
     {
-        User user = new User();
+        UserEntity user = new UserEntity();
         user.setEmail(signupRequest.getEmail());
         user.setName(signupRequest.getName());
         user.setPassword(new BCryptPasswordEncoder().encode(signupRequest.getPassword()));
         user.setRole(UserRole.CUSTOMER);
-        User createdUser = userRepository.save(user);
+        UserEntity createdUser = userRepository.save(user);
 
         UserDto userDto = new UserDto();
         userDto.setId(createdUser.getId());
@@ -44,10 +44,10 @@ public class AuthServiceImpl implements AuthService {
     @PostConstruct
     public void createAdminAccount()
     {
-        User adminAccount = userRepository.findByRole(UserRole.ADMIN);
+        UserEntity adminAccount = userRepository.findByRole(UserRole.ADMIN);
         if(null == adminAccount)
         {
-            User user = new User();
+            UserEntity user = new UserEntity();
             user.setEmail("admin@aditya.com");
             user.setName("admin");
             user.setRole(UserRole.ADMIN);

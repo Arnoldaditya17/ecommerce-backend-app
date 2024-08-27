@@ -7,11 +7,11 @@ import lombok.Data;
 import org.springframework.security.core.userdetails.User;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Data
-public class Order {
+@Table(name = "orders")
+public class OrderEntity {
 
     @Id
     private String id;
@@ -24,12 +24,12 @@ public class Order {
 
     private OrderStatus status;
 
-    @ManyToOne
-    @JoinColumn(name = "shipping_address_id")
-    private ShippingAddress shippingAddress;
+//    @ManyToOne
+//    @JoinColumn(name = "shipping_address_id")
+//    private ShippingAddress shippingAddress;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<OrderItems> orderItems;
+//    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private Set<OrderItems> orderItems;
 
 
 

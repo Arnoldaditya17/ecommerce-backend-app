@@ -1,4 +1,4 @@
-package com.aditya;
+package com.aditya.inventory;
 
 public class Main {
     public static void main(String[] args) {

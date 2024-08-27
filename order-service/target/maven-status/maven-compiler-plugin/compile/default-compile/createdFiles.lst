@@ -1,2 +1,5 @@
-com\aditya\order\Main.class
 com\aditya\order\controllers\OrderController.class
+com\aditya\order\Main.class
+com\aditya\order\models\OrderItems.class
+com\aditya\order\enums\OrderStatus.class
+com\aditya\order\models\Order.class

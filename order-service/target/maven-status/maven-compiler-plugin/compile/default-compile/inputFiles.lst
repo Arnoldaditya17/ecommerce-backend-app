@@ -3,3 +3,6 @@ E:\springboot\ecommerce-backend-app\order-service\src\main\java\com\aditya\order
 E:\springboot\ecommerce-backend-app\order-service\src\main\java\com\aditya\order\controllers\OrderController.java
 E:\springboot\ecommerce-backend-app\order-service\src\main\java\com\aditya\order\models\Order.java
 E:\springboot\ecommerce-backend-app\order-service\src\main\java\com\aditya\order\models\OrderItems.java
+E:\springboot\ecommerce-backend-app\order-service\src\main\java\com\aditya\order\dtos\OrderDto.java
+E:\springboot\ecommerce-backend-app\order-service\src\main\java\com\aditya\order\dtos\OrderMetaData.java
+E:\springboot\ecommerce-backend-app\order-service\src\main\java\com\aditya\order\models\ShippingAddress.java

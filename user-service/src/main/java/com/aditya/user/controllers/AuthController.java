@@ -86,13 +86,13 @@ public class AuthController {
 
                     return new ResponseEntity<>(jwtResponse, HttpStatus.OK);
                 } else {
-                    return new ResponseEntity<>(new ErrorResponse("User not found"), HttpStatus.NOT_FOUND);
+                    return new ResponseEntity<>(new ErrorResponse("User not found",HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
                 }
             } else {
-                return new ResponseEntity<>(new ErrorResponse("Invalid email or password"), HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>(new ErrorResponse("Invalid email or password",HttpStatus.UNAUTHORIZED.value()), HttpStatus.UNAUTHORIZED);
             }
         } catch (BadCredentialsException e) {
-            return new ResponseEntity<>(new ErrorResponse("Invalid email or password"), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new ErrorResponse("Invalid email or password",HttpStatus.UNAUTHORIZED.value()), HttpStatus.UNAUTHORIZED);
         }
     }
 

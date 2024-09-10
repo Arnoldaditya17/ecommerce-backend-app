@@ -71,7 +71,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto getCategoryById(String id) {
-        CategoryEntity category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("category not found !"));
+        CategoryEntity category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("category not found !",id));
 
         return entityDtoMapper.toDto(category, CategoryDto.class);
     }
@@ -79,7 +79,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteCategoryById(String id) {
 
-        CategoryEntity category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("category not found !"));
+        CategoryEntity category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("category not found !",id));
         categoryRepository.delete(category);
 
 
@@ -87,7 +87,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto updateCategory(CategoryDto categoryDto, String id) {
-        CategoryEntity category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("category not found !"));
+        CategoryEntity category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("category not found !",id));
         modelMapper.map(categoryDto, category);
         CategoryEntity savedCategory = categoryRepository.save(category);
         return entityDtoMapper.toDto(savedCategory, CategoryDto.class);

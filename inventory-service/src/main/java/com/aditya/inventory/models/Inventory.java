@@ -4,5 +4,9 @@ public class Inventory {
 
     private String id;
 
+    private String skuCode;
+
+    private Integer quantity;
+
 
 }

@@ -1,6 +1,7 @@
 package com.aditya.product.services;
 
 
+import com.aditya.common.exceptions.ResourceNotFoundException;
 import com.aditya.common.utils.EntityDtoMapper;
 import com.aditya.product.dtos.ProductDto;
 import com.aditya.product.models.ProductEntity;
@@ -47,7 +48,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto updateProduct(ProductDto productDto, String id) {
-        ProductEntity product=productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+        ProductEntity product=productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product Not found !!",id));
         productDto.setUpdatedAt(new Date());
         modelMapper.map(productDto, product);
        ProductEntity updatedProduct = productRepository.save(product);
@@ -56,13 +57,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto getProductById(String id) {
-        ProductEntity product=productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+        ProductEntity product=productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product Not found !!",id));
         return entityDtoMapper.toDto(product, ProductDto.class);
     }
 
     @Override
     public void deleteProductById(String id) {
-        productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+        productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product Not found !!",id));
         productRepository.deleteById(id);
 
     }

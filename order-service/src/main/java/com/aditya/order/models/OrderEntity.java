@@ -16,13 +16,15 @@ public class OrderEntity {
     @Id
     private String id;
 
-    private User user;
+    private int user_id;
 
     private LocalDateTime orderDate;
 
     private String paymentMethod;
 
     private OrderStatus status;
+
+    private Boolean active;
 
 //    @ManyToOne
 //    @JoinColumn(name = "shipping_address_id")

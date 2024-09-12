@@ -3,9 +3,9 @@ package com.aditya.user.controllers;
 
 import com.aditya.user.dto.*;
 import com.aditya.common.exceptions.ErrorResponse;
-import com.aditya.user.models.RefreshTokenEntity;
-import com.aditya.user.models.TokenEntity;
-import com.aditya.user.models.UserEntity;
+import com.aditya.user.models.RefreshToken;
+import com.aditya.user.models.Token;
+import com.aditya.user.models.User;
 import com.aditya.user.repositories.TokenRepository;
 import com.aditya.user.repositories.UserRepository;
 import com.aditya.user.services.auth.AuthService;
@@ -65,14 +65,14 @@ public class AuthController {
             if (authentication.isAuthenticated()) {
                 // Load user details
                 final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
-                Optional<UserEntity> optionalUser = userRepository.findFirstByEmail(userDetails.getUsername());
+                Optional<User> optionalUser = userRepository.findFirstByEmail(userDetails.getUsername());
 
                 if (optionalUser.isPresent()) {
-                    UserEntity user = optionalUser.get();
+                    User user = optionalUser.get();
 
                     // Generate tokens
                     final String jwt = jwtUtils.generateToken(userDetails.getUsername());
-                    RefreshTokenEntity refreshToken = refreshTokenService.createRefreshToken(authenticationRequest.getUsername());
+                    RefreshToken refreshToken = refreshTokenService.createRefreshToken(authenticationRequest.getUsername());
                     revokeAllTokenByUser(user);
                     saveUserToken(user, jwt);
 
@@ -86,18 +86,18 @@ public class AuthController {
 
                     return new ResponseEntity<>(jwtResponse, HttpStatus.OK);
                 } else {
-                    return new ResponseEntity<>(new ErrorResponse("User not found",HttpStatus.NOT_FOUND.value()), HttpStatus.NOT_FOUND);
+                    return new ResponseEntity<>(new ErrorResponse("User not found"), HttpStatus.NOT_FOUND);
                 }
             } else {
-                return new ResponseEntity<>(new ErrorResponse("Invalid email or password",HttpStatus.UNAUTHORIZED.value()), HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>(new ErrorResponse("Invalid email or password"), HttpStatus.UNAUTHORIZED);
             }
         } catch (BadCredentialsException e) {
-            return new ResponseEntity<>(new ErrorResponse("Invalid email or password",HttpStatus.UNAUTHORIZED.value()), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new ErrorResponse("Invalid email or password"), HttpStatus.UNAUTHORIZED);
         }
     }
 
-    private void revokeAllTokenByUser(UserEntity user) {
-        List<TokenEntity> validTokenListByUser = tokenRepository.findAllTokenByUser(Math.toIntExact(user.getId()));
+    private void revokeAllTokenByUser(User user) {
+        List<Token> validTokenListByUser = tokenRepository.findAllTokenByUser(Math.toIntExact(user.getId()));
         if (!validTokenListByUser.isEmpty()) {
             validTokenListByUser.forEach(token -> {
                 token.setLoggedOut(true);
@@ -106,8 +106,8 @@ public class AuthController {
         tokenRepository.saveAll(validTokenListByUser);
     }
 
-    private void saveUserToken(UserEntity user, String jwt) {
-        TokenEntity token = new TokenEntity();
+    private void saveUserToken(User user, String jwt) {
+        Token token = new Token();
         token.setUser(user);
         token.setToken(jwt);
         token.setLoggedOut(false);
@@ -119,7 +119,7 @@ public class AuthController {
     public JwtResponseDTO refreshToken(@RequestBody RefreshTokenRequestDTO refreshTokenRequestDTO) {
         return refreshTokenService.findByToken(refreshTokenRequestDTO.getRefreshToken())
                 .map(refreshTokenService::verifyExpiration)
-                .map(RefreshTokenEntity::getUser)
+                .map(RefreshToken::getUser)
                 .map(user -> {
                     String accessToken = jwtUtils.generateToken(user.getEmail());
                     return JwtResponseDTO.builder()

@@ -18,5 +18,7 @@ public interface CategoryService {
 
     CategoryDto searchCategoryByTitle(String title);
 
-    void addProductToCategory(String categoryId, String productId);
+
+
+
 }

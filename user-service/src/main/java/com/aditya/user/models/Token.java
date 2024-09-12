@@ -6,8 +6,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name = "tokens")
-public class TokenEntity {
+public class Token {
     @Id
     @GeneratedValue
     private Integer id;
@@ -19,5 +18,5 @@ public class TokenEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private User user;
 }

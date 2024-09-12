@@ -2,19 +2,19 @@ package com.aditya.order.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 import lombok.Data;
 
 import java.util.Date;
 
 @Entity
 @Data
-@Table(name = "order_items")
-public class OrderItemEntity {
+public class OrderItems {
 
 
     @Id
     private String id;
+
+    private String productId;
 
     private String productSku;
 
@@ -24,11 +24,11 @@ public class OrderItemEntity {
 
     private  int salePrice;
 
+    private Date orderDate;
+
     private Date createTime;
 
     private Date updateTime;
-
-
 
 
 

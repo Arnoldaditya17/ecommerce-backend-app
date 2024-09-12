@@ -32,14 +32,6 @@ public class CategoryController {
 
     }
 
-    @PostMapping("/{categoryId}/product/{productId}")
-    public void addProductToCategory(@PathVariable String categoryId, @PathVariable String productId)
-    {
-        categoryService.addProductToCategory(categoryId,productId);
-
-    }
-
-
 
     @GetMapping
     public CustomPageResponse<CategoryDto> getAllCategories(

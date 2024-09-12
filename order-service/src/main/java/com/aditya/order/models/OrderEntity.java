@@ -7,6 +7,7 @@ import lombok.Data;
 import org.springframework.security.core.userdetails.User;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Data
@@ -16,7 +17,7 @@ public class OrderEntity {
     @Id
     private String id;
 
-    private int user_id;
+    private Long user_id;
 
     private LocalDateTime orderDate;
 
@@ -29,9 +30,9 @@ public class OrderEntity {
 //    @ManyToOne
 //    @JoinColumn(name = "shipping_address_id")
 //    private ShippingAddress shippingAddress;
-
+//
 //    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<OrderItems> orderItems;
+//    private Set<OrderItemEntity> orderItems;
 
 
 

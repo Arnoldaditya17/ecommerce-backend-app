@@ -16,8 +16,6 @@ public class OrderItemEntity {
     @Id
     private String id;
 
-    private String productId;
-
     private String productSku;
 
     private int quantity;
@@ -26,11 +24,11 @@ public class OrderItemEntity {
 
     private  int salePrice;
 
-    private Date orderDate;
-
     private Date createTime;
 
     private Date updateTime;
+
+
 
 
 

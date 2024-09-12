@@ -1,14 +1,9 @@
 package com.aditya.product.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Data
@@ -27,8 +22,13 @@ public class CategoryEntity {
 
     private Date updated_at;
 
-    @ManyToMany(mappedBy = "categoryList")
-    private List<ProductEntity> courses = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "category_product",
+            joinColumns = @JoinColumn(name = "category_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private Set<ProductEntity> products = new HashSet<>();
 
 
 

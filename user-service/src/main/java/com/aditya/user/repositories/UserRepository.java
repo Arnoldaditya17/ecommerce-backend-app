@@ -2,17 +2,17 @@ package com.aditya.user.repositories;
 
 
 import com.aditya.user.enums.UserRole;
-import com.aditya.user.models.User;
+import com.aditya.user.models.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-    Optional<User> findFirstByEmail(String username);
+    Optional<UserEntity> findFirstByEmail(String username);
 
-    User findByRole(UserRole userRole);
+    UserEntity findByRole(UserRole userRole);
 
 
 

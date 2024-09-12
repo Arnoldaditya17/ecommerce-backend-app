@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "users")
-public class User {
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,7 +25,7 @@ public class User {
     private UserRole role;
 
     @OneToMany(mappedBy = "user")
-    private List<Token> tokens;
+    private List<TokenEntity> tokens;
 
 
     @Column( name = "userProfile", columnDefinition = "bytea")

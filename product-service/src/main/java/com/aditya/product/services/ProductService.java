@@ -1,7 +1,6 @@
 package com.aditya.product.services;
 
 import com.aditya.product.dtos.ProductDto;
-import com.aditya.product.models.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -5,7 +5,7 @@ import com.aditya.common.exceptions.ResourceNotFoundException;
 import com.aditya.common.utils.EntityDtoMapper;
 import com.aditya.product.dtos.CategoryDto;
 import com.aditya.common.dtos.CustomPageResponse;
-import com.aditya.product.models.CategoryEntity;
+import com.aditya.product.models.Category;
 import com.aditya.product.repositories.CategoryRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -40,9 +40,9 @@ public class CategoryServiceImpl implements CategoryService {
         categoryDto.setCreated_at(new Date());
 
         //convert dto entity
-        CategoryEntity category = entityDtoMapper.toEntity(categoryDto, CategoryEntity.class);
+        Category category = entityDtoMapper.toEntity(categoryDto, Category.class);
 
-        CategoryEntity savedCategory = categoryRepository.save(category);
+        Category savedCategory = categoryRepository.save(category);
 
         return entityDtoMapper.toDto(savedCategory, CategoryDto.class);
 
@@ -53,8 +53,8 @@ public class CategoryServiceImpl implements CategoryService {
         Sort.Direction direction = Sort.Direction.fromString(sortOrder);
         Sort sort = Sort.by(direction, sortBy);
         PageRequest pageRequest = PageRequest.of(pageNumber, pageSize, sort);
-        Page<CategoryEntity> categoryPage = categoryRepository.findAll(pageRequest);
-        List<CategoryEntity> categoryList = categoryPage.getContent();
+        Page<Category> categoryPage = categoryRepository.findAll(pageRequest);
+        List<Category> categoryList = categoryPage.getContent();
 
         List<CategoryDto> categoryDtoList = categoryList.stream().map(category -> entityDtoMapper.toDto(category, CategoryDto.class)).toList();
         CustomPageResponse<CategoryDto> customPageResponse = new CustomPageResponse<>();
@@ -71,7 +71,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto getCategoryById(String id) {
-        CategoryEntity category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("category not found !",id));
+        Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("category not found !"));
 
         return entityDtoMapper.toDto(category, CategoryDto.class);
     }
@@ -79,7 +79,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public void deleteCategoryById(String id) {
 
-        CategoryEntity category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("category not found !",id));
+        Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("category not found !"));
         categoryRepository.delete(category);
 
 
@@ -87,9 +87,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto updateCategory(CategoryDto categoryDto, String id) {
-        CategoryEntity category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("category not found !",id));
+        Category category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("category not found !"));
         modelMapper.map(categoryDto, category);
-        CategoryEntity savedCategory = categoryRepository.save(category);
+        Category savedCategory = categoryRepository.save(category);
         return entityDtoMapper.toDto(savedCategory, CategoryDto.class);
 
     }
@@ -98,10 +98,5 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryDto searchCategoryByTitle(String title) {
 
         return null;
-    }
-
-    @Override
-    public void addProductToCategory(String categoryId, String productId) {
-
     }
 }

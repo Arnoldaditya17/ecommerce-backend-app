@@ -1,4 +1,2 @@
 # Ignore application.properties
 app-starter/src/main/resources/application.properties
-app-starter/src/main/resources/application-dev.properties
-app-starter/src/main/resources/application-prod.properties

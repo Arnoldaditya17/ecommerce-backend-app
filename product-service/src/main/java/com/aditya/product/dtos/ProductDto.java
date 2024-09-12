@@ -16,7 +16,7 @@ public class ProductDto {
 
     private int salePrice;
 
-    private String skuCode;
+    private String sku;
 
     private String description;
 

@@ -16,9 +16,8 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "refresh_tokens")
 
-public class RefreshTokenEntity {
+public class RefreshToken {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +26,7 @@ public class RefreshTokenEntity {
     private Instant expiryDate;
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private UserEntity user;
+    private User user;
     @CreationTimestamp
     @Column(updatable = false)
     private Instant createdAt;

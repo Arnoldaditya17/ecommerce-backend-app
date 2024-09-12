@@ -11,13 +11,12 @@ import java.util.Set;
 
 @Entity
 @Data
-@Table(name = "orders")
-public class OrderEntity {
+public class Order {
 
     @Id
     private String id;
 
-    private Long user_id;
+    private User user;
 
     private LocalDateTime orderDate;
 
@@ -25,14 +24,12 @@ public class OrderEntity {
 
     private OrderStatus status;
 
-    private Boolean active;
+    @ManyToOne
+    @JoinColumn(name = "shipping_address_id")
+    private ShippingAddress shippingAddress;
 
-//    @ManyToOne
-//    @JoinColumn(name = "shipping_address_id")
-//    private ShippingAddress shippingAddress;
-//
-//    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<OrderItemEntity> orderItems;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<OrderItems> orderItems;
 
 
 

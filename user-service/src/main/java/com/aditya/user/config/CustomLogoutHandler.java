@@ -2,7 +2,7 @@ package com.aditya.user.config;
 
 
 
-import com.aditya.user.models.TokenEntity;
+import com.aditya.user.models.Token;
 import com.aditya.user.repositories.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -38,7 +38,7 @@ public class CustomLogoutHandler implements LogoutHandler {
             return;
         }
 
-        TokenEntity tokenStored = tokenRepository.findByToken(token).orElse(null);
+        Token tokenStored = tokenRepository.findByToken(token).orElse(null);
         if (tokenStored != null) {
             tokenStored.setLoggedOut(true);
             tokenRepository.save(tokenStored);

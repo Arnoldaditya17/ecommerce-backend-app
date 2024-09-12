@@ -15,17 +15,10 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Products")
 public class ProductController {
 
-
-
-
     private final ProductService productService;
-
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
-
-
-
 
     @PostMapping
     public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {

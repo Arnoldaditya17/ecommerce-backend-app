@@ -2,7 +2,7 @@ package com.aditya.user.services.jwt;
 
 
 import com.aditya.user.repositories.UserRepository;
-import com.aditya.user.models.User;
+import com.aditya.user.models.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,7 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> optionalUser = userRepository.findFirstByEmail(username);
+        Optional<UserEntity> optionalUser = userRepository.findFirstByEmail(username);
         if(optionalUser.isEmpty()) throw new UsernameNotFoundException("User not found",null);
         return  new org.springframework.security.core.userdetails.User(optionalUser.get().getEmail(), optionalUser
                 .get()

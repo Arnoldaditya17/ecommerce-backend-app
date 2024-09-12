@@ -1,9 +1,10 @@
 package com.aditya.product.services;
 
 
+import com.aditya.common.exceptions.ResourceNotFoundException;
 import com.aditya.common.utils.EntityDtoMapper;
 import com.aditya.product.dtos.ProductDto;
-import com.aditya.product.models.Product;
+import com.aditya.product.models.ProductEntity;
 import com.aditya.product.repositories.ProductRepository;
 
 import org.modelmapper.ModelMapper;
@@ -33,35 +34,36 @@ public class ProductServiceImpl implements ProductService {
         String productId= UUID.randomUUID().toString();
         productDto.setId(productId);
         productDto.setCreatedAt(new Date());
-       Product savedproduct = productRepository.save(entityDtoMapper.toEntity(productDto, Product.class));
-       return entityDtoMapper.toDto(savedproduct, ProductDto.class);
+       ProductEntity savedProduct = productRepository.save(entityDtoMapper.toEntity(productDto, ProductEntity.class));
+       return entityDtoMapper.toDto(savedProduct, ProductDto.class);
     }
+
 
     @Override
     public Page<ProductDto> getAllProduct(Pageable pageable) {
-       Page<Product> products = productRepository.findAll(pageable);
+       Page<ProductEntity> products = productRepository.findAll(pageable);
        List<ProductDto> dtos =products.getContent().stream().map(product -> modelMapper.map(product, ProductDto.class)).toList();
         return new PageImpl<>(dtos,pageable,products.getTotalElements());
     }
 
     @Override
     public ProductDto updateProduct(ProductDto productDto, String id) {
-        Product product=productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+        ProductEntity product=productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product Not found !!",id));
         productDto.setUpdatedAt(new Date());
         modelMapper.map(productDto, product);
-       Product updatedProduct = productRepository.save(product);
+       ProductEntity updatedProduct = productRepository.save(product);
         return entityDtoMapper.toDto(updatedProduct, ProductDto.class);
     }
 
     @Override
     public ProductDto getProductById(String id) {
-        Product product=productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+        ProductEntity product=productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product Not found !!",id));
         return entityDtoMapper.toDto(product, ProductDto.class);
     }
 
     @Override
     public void deleteProductById(String id) {
-        productRepository.findById(id).orElseThrow(() -> new RuntimeException("Product not found"));
+        productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product Not found !!",id));
         productRepository.deleteById(id);
 
     }

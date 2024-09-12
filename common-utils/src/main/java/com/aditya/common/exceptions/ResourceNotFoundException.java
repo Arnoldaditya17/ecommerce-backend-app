@@ -3,12 +3,9 @@ package com.aditya.common.exceptions;
 public class ResourceNotFoundException extends RuntimeException {
 
 
-    public ResourceNotFoundException(String courseNotFound) {
+    public ResourceNotFoundException(String entityNotFound,String id) {
 
-        super(courseNotFound);
+        super(entityNotFound + " with ID " + id + " not found");
     }
 
-    public ResourceNotFoundException() {
-        super("product not found !");
-    }
 }

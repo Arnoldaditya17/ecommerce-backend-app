@@ -1,42 +1,40 @@
 package com.aditya.product.models;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+
+import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.validator.constraints.UniqueElements;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Data
-public class Product  {
+@Table(name = "products")
+public class ProductEntity {
 
     @Id
     private String id;
 
     private String name;
 
-    private  int marketPrice;
+    private int marketPrice;
 
     private int salePrice;
 
-    private String sku;
+    @Column(unique = true, nullable = false)
+    private String skuCode;
 
     private String description;
 
     private String image;
 
-    private String category;
-
     private Date created_at;
 
     private Date updated_at;
 
-    @ManyToMany
-    private List<Category> categoryList = new ArrayList<>();
-
-
-
+    @ManyToMany(mappedBy = "products")
+    private List<CategoryEntity> categories = new ArrayList<>();
 
 
 }

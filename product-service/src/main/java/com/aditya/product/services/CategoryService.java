@@ -1,8 +1,9 @@
 package com.aditya.product.services;
 
-
 import com.aditya.product.dtos.CategoryDto;
 import com.aditya.common.dtos.CustomPageResponse;
+
+import java.util.UUID;
 
 public interface CategoryService {
 
@@ -10,13 +11,13 @@ public interface CategoryService {
 
     CustomPageResponse<CategoryDto> getAllCategories(int pageNumber, int pageSize, String sortBy, String sortOrder);
 
-    CategoryDto getCategoryById(String id);
+    CategoryDto getCategoryById(UUID id);
 
-    void deleteCategoryById(String id);
+    void deleteCategoryById(UUID id);
 
-    CategoryDto updateCategory(CategoryDto categoryDto , String id);
+    CategoryDto updateCategory(CategoryDto categoryDto, UUID id);
 
     CategoryDto searchCategoryByTitle(String title);
 
-    void addProductToCategory(String categoryId, String productId);
+    void addProductToCategory(UUID categoryId, UUID productId);
 }

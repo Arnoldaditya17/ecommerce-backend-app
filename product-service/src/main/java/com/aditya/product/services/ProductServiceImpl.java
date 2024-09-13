@@ -1,12 +1,10 @@
 package com.aditya.product.services;
 
-
 import com.aditya.common.exceptions.ResourceNotFoundException;
 import com.aditya.common.utils.EntityDtoMapper;
 import com.aditya.product.dtos.ProductDto;
 import com.aditya.product.models.ProductEntity;
 import com.aditya.product.repositories.ProductRepository;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,8 +17,9 @@ import java.util.UUID;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+
     private final EntityDtoMapper entityDtoMapper;
-   private final ProductRepository productRepository;
+    private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
 
     public ProductServiceImpl(ProductRepository productRepository, EntityDtoMapper entityDtoMapper, ModelMapper modelMapper) {
@@ -31,39 +30,36 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto addProduct(ProductDto productDto) {
-        String productId= UUID.randomUUID().toString();
-        productDto.setId(productId);
         productDto.setCreatedAt(new Date());
-       ProductEntity savedProduct = productRepository.save(entityDtoMapper.toEntity(productDto, ProductEntity.class));
-       return entityDtoMapper.toDto(savedProduct, ProductDto.class);
+        ProductEntity savedProduct = productRepository.save(entityDtoMapper.toEntity(productDto, ProductEntity.class));
+        return entityDtoMapper.toDto(savedProduct, ProductDto.class);
     }
-
 
     @Override
     public Page<ProductDto> getAllProduct(Pageable pageable) {
-       Page<ProductEntity> products = productRepository.findAll(pageable);
-       List<ProductDto> dtos =products.getContent().stream().map(product -> modelMapper.map(product, ProductDto.class)).toList();
-        return new PageImpl<>(dtos,pageable,products.getTotalElements());
+        Page<ProductEntity> products = productRepository.findAll(pageable);
+        List<ProductDto> dtos = products.getContent().stream().map(product -> modelMapper.map(product, ProductDto.class)).toList();
+        return new PageImpl<>(dtos, pageable, products.getTotalElements());
     }
 
     @Override
-    public ProductDto updateProduct(ProductDto productDto, String id) {
-        ProductEntity product=productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product Not found !!",id));
+    public ProductDto updateProduct(ProductDto productDto, UUID id) {
+        ProductEntity product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product Not found !!", id));
         productDto.setUpdatedAt(new Date());
         modelMapper.map(productDto, product);
-       ProductEntity updatedProduct = productRepository.save(product);
+        ProductEntity updatedProduct = productRepository.save(product);
         return entityDtoMapper.toDto(updatedProduct, ProductDto.class);
     }
 
     @Override
-    public ProductDto getProductById(String id) {
-        ProductEntity product=productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product Not found !!",id));
+    public ProductDto getProductById(UUID id) {
+        ProductEntity product = productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product Not found !!", id));
         return entityDtoMapper.toDto(product, ProductDto.class);
     }
 
     @Override
-    public void deleteProductById(String id) {
-        productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product Not found !!",id));
+    public void deleteProductById(UUID id) {
+        productRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product Not found !!", id));
         productRepository.deleteById(id);
 
     }

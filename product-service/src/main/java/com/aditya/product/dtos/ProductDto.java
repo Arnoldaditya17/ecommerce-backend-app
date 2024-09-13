@@ -2,13 +2,15 @@ package com.aditya.product.dtos;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Data
-public class ProductDto {
+public class ProductDto implements Serializable {
 
-    private String id;
+    private UUID id;
 
     private String name;
 

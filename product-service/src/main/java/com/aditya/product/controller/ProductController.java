@@ -10,13 +10,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/v1/products")
 @Tag(name = "Products")
 public class ProductController {
-
-
-
 
     private final ProductService productService;
 
@@ -24,32 +23,26 @@ public class ProductController {
         this.productService = productService;
     }
 
-
-
-
     @PostMapping
     public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
-        productService.addProduct(productDto);
-        return ResponseEntity.ok(productDto);
+        return ResponseEntity.ok(productService.addProduct(productDto));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductDto> getProductById(@PathVariable String id)
-    {
+    public ResponseEntity<ProductDto> getProductById(@PathVariable UUID id) {
         return ResponseEntity.ok(productService.getProductById(id));
 
     }
 
     @GetMapping
-    public Page<ProductDto> getAllProducts(Pageable pageable)
-    {
+    public Page<ProductDto> getAllProducts(Pageable pageable) {
         productService.getAllProduct(pageable);
         return productService.getAllProduct(pageable);
 
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<CustomMessage> deleteProduct(@PathVariable String id) {
+    public ResponseEntity<CustomMessage> deleteProduct(@PathVariable UUID id) {
         productService.deleteProductById(id);
         CustomMessage customMessage = new CustomMessage();
         customMessage.setMessage("Category deleted successfully");
@@ -58,15 +51,8 @@ public class ProductController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDto> updateProduct(@PathVariable String id, @RequestBody ProductDto productDto) {
+    public ResponseEntity<ProductDto> updateProduct(@PathVariable UUID id, @RequestBody ProductDto productDto) {
         productService.updateProduct(productDto, id);
         return ResponseEntity.ok(productDto);
     }
-
-
-
-
-
-
-
 }

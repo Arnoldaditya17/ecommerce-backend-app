@@ -10,7 +10,8 @@ import java.util.*;
 @Table(name = "categories")
 public class CategoryEntity {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String title;
 
@@ -30,6 +31,16 @@ public class CategoryEntity {
     )
     private Set<ProductEntity> products = new HashSet<>();
 
+
+    public void addProduct(ProductEntity product) {
+        products.add(product);
+        product.getCategories().add(this);
+    }
+
+    public void removeProduct(ProductEntity product) {
+        products.remove(product);
+        product.getCategories().remove(this);
+    }
 
 
 }

@@ -2,11 +2,11 @@ package com.aditya.product.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -14,7 +14,8 @@ import java.util.List;
 public class ProductEntity {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String name;
 
@@ -35,6 +36,16 @@ public class ProductEntity {
 
     @ManyToMany(mappedBy = "products")
     private List<CategoryEntity> categories = new ArrayList<>();
+
+    public void addCategory(CategoryEntity category) {
+        categories.add(category);
+        category.getProducts().add(this);
+    }
+
+    public void removeCategory(CategoryEntity category) {
+        categories.remove(category);
+        category.getProducts().remove(this);
+    }
 
 
 }

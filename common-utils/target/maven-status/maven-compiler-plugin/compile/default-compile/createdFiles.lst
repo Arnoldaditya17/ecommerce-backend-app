@@ -7,3 +7,4 @@ com\aditya\common\config\AppConstants.class
 com\aditya\common\exceptions\ErrorResponse.class
 com\aditya\common\exceptions\ResourceNotFoundException.class
 com\aditya\common\exceptions\GlobalExceptionHandler.class
+com\aditya\common\Model\BaseEntity.class

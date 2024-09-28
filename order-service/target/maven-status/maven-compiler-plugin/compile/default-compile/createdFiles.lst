@@ -3,6 +3,6 @@ com\aditya\order\models\ShippingAddress.class
 com\aditya\order\controllers\OrderController.class
 com\aditya\order\dtos\OrderDto.class
 com\aditya\order\enums\OrderStatus.class
+com\aditya\order\models\OrderEntity.class
 com\aditya\order\Main.class
-com\aditya\order\models\OrderItems.class
-com\aditya\order\models\Order.class
+com\aditya\order\models\OrderItemEntity.class

@@ -1,59 +1,48 @@
 package com.aditya.user.services.auth;
 
 
-
-import com.aditya.user.models.RefreshTokenEntity;
+import com.aditya.user.models.RefreshToken;
 import com.aditya.user.repositories.RefreshTokenRepository;
 import com.aditya.user.repositories.UserRepository;
-import com.aditya.user.models.UserEntity;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class RefreshTokenService {
 
-    @Autowired
-    RefreshTokenRepository refreshTokenRepository;
-    @Autowired
-    UserRepository userRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
 
-//@Cacheable(value = "refreshToken", key = "#username")
-    public RefreshTokenEntity createRefreshToken(String username) {
-        Optional<UserEntity> userOptional = userRepository.findFirstByEmail(username);
+    private final UserRepository userRepository;
 
-        if (userOptional.isEmpty()) {
-            throw new UsernameNotFoundException("User not found with email: " + username);
-        }
-
-        UserEntity user = userOptional.get();
-        RefreshTokenEntity refreshToken = RefreshTokenEntity.builder()
-                .user(user)
-                .token(UUID.randomUUID().toString())
-                .expiryDate(Instant.now().plusMillis(600000)) // set expiry of refresh token to 10 minutes
-                .build();
-
-        return refreshTokenRepository.save(refreshToken);
+    public RefreshTokenService(RefreshTokenRepository refreshTokenRepository, UserRepository userRepository) {
+        this.refreshTokenRepository = refreshTokenRepository;
+        this.userRepository = userRepository;
     }
 
-
-    public Optional<RefreshTokenEntity> findByToken(String token){
-        return refreshTokenRepository.findByToken(token);
-
+    public RefreshToken createRefreshToken(String email) {
+        RefreshToken refreshToken = new RefreshToken();
+        refreshToken.setUser(userRepository.findByEmail(email).get());
+        refreshToken.setRefreshToken(UUID.randomUUID().toString());
+        refreshToken.setExpiresAt(Instant.now().plusMillis(999900000));
+       return refreshTokenRepository.save(refreshToken);
     }
 
-    public RefreshTokenEntity verifyExpiration(RefreshTokenEntity token){
-        if(token.getExpiryDate().compareTo(Instant.now())<0){
-            refreshTokenRepository.delete(token);
-            throw new RuntimeException(token.getToken() + " Refresh token is expired. Please make a new login..!");
+    public Optional<RefreshToken> findByRefreshToken(String refreshToken) {
+        return refreshTokenRepository.findByRefreshToken(refreshToken);
+    }
+
+    public RefreshToken verifyExpiration(RefreshToken refreshToken)
+    {
+        if(refreshToken.getExpiresAt().compareTo(Instant.now())<0)
+        {
+            refreshTokenRepository.delete(refreshToken);
+            throw  new RuntimeException("Refresh token expired");
         }
-        return token;
+        return refreshToken;
+
     }
 
 

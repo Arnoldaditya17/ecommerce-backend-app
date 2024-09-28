@@ -1,9 +1,9 @@
-com\aditya\product\models\Product.class
 com\aditya\product\dtos\ProductDto.class
 com\aditya\product\services\CategoryServiceImpl.class
 com\aditya\product\controller\CategoryController.class
 com\aditya\product\dtos\ProductMetaData.class
-com\aditya\product\models\Category.class
+com\aditya\product\models\CategoryEntity.class
+com\aditya\product\models\ProductEntity.class
 com\aditya\product\services\ProductServiceImpl.class
 com\aditya\product\services\CategoryService.class
 com\aditya\product\controller\ProductController.class

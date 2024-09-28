@@ -5,6 +5,7 @@ import com.aditya.common.exceptions.ResourceNotFoundException;
 import com.aditya.common.utils.EntityDtoMapper;
 import com.aditya.product.dtos.CategoryDto;
 import com.aditya.common.dtos.CustomPageResponse;
+import com.aditya.product.dtos.ProductDto;
 import com.aditya.product.models.CategoryEntity;
 import com.aditya.product.models.ProductEntity;
 import com.aditya.product.repositories.CategoryRepository;
@@ -14,9 +15,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -101,7 +104,14 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.save(category);
         System.out.println("Added product to Category ❤❤❤❤");
 
+    }
 
+    @Override
+    @Transactional
+    public List<ProductDto> getProductOfCateg(UUID categoryId) {
+        CategoryEntity categoryEntity = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category Not Found", categoryId));
+        List<ProductEntity> productEntityList = categoryEntity.getProducts();
 
+        return productEntityList.stream().map(product -> entityDtoMapper.toDto(product,ProductDto.class)).toList();
     }
 }

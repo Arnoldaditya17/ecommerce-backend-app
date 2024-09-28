@@ -1,5 +1,6 @@
 package com.aditya.product.dtos;
 
+import com.aditya.product.models.CategoryEntity;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -30,5 +31,5 @@ public class ProductDto implements Serializable {
 
     private Date updatedAt;
 
-    private List<String> categories;
+    private List<CategoryEntity> categories;
 }

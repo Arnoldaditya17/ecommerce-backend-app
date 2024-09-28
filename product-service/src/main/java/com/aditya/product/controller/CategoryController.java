@@ -4,6 +4,7 @@ import com.aditya.common.config.AppConstants;
 import com.aditya.common.dtos.CustomMessage;
 import com.aditya.common.dtos.CustomPageResponse;
 import com.aditya.product.dtos.CategoryDto;
+import com.aditya.product.dtos.ProductDto;
 import com.aditya.product.services.CategoryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 
@@ -27,14 +29,16 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<CategoryDto> addCategory(@Valid @RequestBody CategoryDto categoryDto) {
-
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryService.createCategory(categoryDto));
     }
 
     @PostMapping("/{categoryId}/product/{productId}")
-    public void addProductToCategory(@PathVariable UUID categoryId, @PathVariable UUID productId) {
+    public ResponseEntity<CustomMessage> addProductToCategory(@PathVariable UUID categoryId, @PathVariable UUID productId) {
         categoryService.addProductToCategory(categoryId, productId);
-
+        CustomMessage customMessage = new CustomMessage();
+        customMessage.setMessage("Successfully added product to the category");
+        customMessage.setSuccess(true);
+        return ResponseEntity.status(HttpStatus.CREATED).body(customMessage);
     }
 
     @GetMapping
@@ -49,6 +53,12 @@ public class CategoryController {
     @GetMapping("/{id}")
     public CategoryDto getCategoryById(@PathVariable UUID id) {
         return categoryService.getCategoryById(id);
+    }
+
+    @GetMapping("/{categoryId}/product")
+    public ResponseEntity<List<ProductDto>> getProductsOfCategory(@PathVariable UUID categoryId) {
+
+        return ResponseEntity.ok( categoryService.getProductOfCateg(categoryId));
     }
 
     @DeleteMapping("/{id}")
@@ -68,6 +78,5 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.OK
         ).body(createdDto);
     }
-
 
 }

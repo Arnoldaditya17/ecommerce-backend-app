@@ -10,7 +10,8 @@ import java.util.*;
 @Table(name = "categories")
 public class CategoryEntity {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String title;
 
@@ -28,8 +29,18 @@ public class CategoryEntity {
             joinColumns = @JoinColumn(name = "category_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )
-    private Set<ProductEntity> products = new HashSet<>();
+    private List<ProductEntity> products = new ArrayList<>();
 
+
+    public void addProduct(ProductEntity product) {
+        products.add(product);
+        product.getCategories().add(this);
+    }
+
+    public void removeProduct(ProductEntity product) {
+        products.remove(product);
+        product.getCategories().remove(this);
+    }
 
 
 }

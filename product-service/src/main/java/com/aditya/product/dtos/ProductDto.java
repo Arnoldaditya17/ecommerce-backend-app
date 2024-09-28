@@ -1,14 +1,17 @@
 package com.aditya.product.dtos;
 
+import com.aditya.product.models.CategoryEntity;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Data
-public class ProductDto {
+public class ProductDto implements Serializable {
 
-    private String id;
+    private UUID id;
 
     private String name;
 
@@ -28,5 +31,5 @@ public class ProductDto {
 
     private Date updatedAt;
 
-    private List<String> categories;
+    private List<CategoryEntity> categories;
 }

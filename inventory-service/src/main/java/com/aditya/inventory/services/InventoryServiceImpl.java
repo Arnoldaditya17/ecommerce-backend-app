@@ -15,7 +15,6 @@ import java.util.UUID;
 @Service
 public class InventoryServiceImpl implements InventoryService {
 
-
     private final EntityDtoMapper entityDtoMapper;
     private final InventoryRepository inventoryRepository;
     private final ModelMapper modelMapper;
@@ -28,16 +27,18 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public InventoryDto getInventory(String id) {
+    public InventoryDto getInventory(UUID id) {
         InventoryEntity inventoryEntity = inventoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("inventory not found!!", id));
         return entityDtoMapper.toDto(inventoryEntity, InventoryDto.class);
     }
+
 
     @Override
     public List<InventoryDto> getAllInventories() {
         List<InventoryEntity> inventoryEntityList = inventoryRepository.findAll();
         return inventoryEntityList.stream().map(inventory -> entityDtoMapper.toDto(inventory, InventoryDto.class)).toList();
     }
+
 
     @Override
     public InventoryDto addInventory(InventoryDto inventoryDto) {
@@ -46,9 +47,10 @@ public class InventoryServiceImpl implements InventoryService {
         return entityDtoMapper.toDto(savedInventory, InventoryDto.class);
     }
 
+
     @Override
     public InventoryDto updateInventory(InventoryDto inventoryDto) {
-        String id = inventoryDto.getId();
+        UUID id = inventoryDto.getId();
         InventoryEntity inventoryEntity = inventoryRepository
                 .findById(id)
                 .orElseThrow(
@@ -62,7 +64,7 @@ public class InventoryServiceImpl implements InventoryService {
 
 
     @Override
-    public void deleteInventory(String id) {
+    public void deleteInventory(UUID id) {
         InventoryEntity inventoryEntity = inventoryRepository
                 .findById(id)
                 .orElseThrow(

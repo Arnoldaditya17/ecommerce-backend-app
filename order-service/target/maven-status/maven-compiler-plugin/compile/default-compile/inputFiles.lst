@@ -1,8 +1,8 @@
 E:\springboot\ecommerce-backend-app\order-service\src\main\java\com\aditya\order\Main.java
+E:\springboot\ecommerce-backend-app\order-service\src\main\java\com\aditya\order\models\OrderItemEntity.java
 E:\springboot\ecommerce-backend-app\order-service\src\main\java\com\aditya\order\enums\OrderStatus.java
 E:\springboot\ecommerce-backend-app\order-service\src\main\java\com\aditya\order\controllers\OrderController.java
-E:\springboot\ecommerce-backend-app\order-service\src\main\java\com\aditya\order\models\Order.java
-E:\springboot\ecommerce-backend-app\order-service\src\main\java\com\aditya\order\models\OrderItems.java
 E:\springboot\ecommerce-backend-app\order-service\src\main\java\com\aditya\order\dtos\OrderDto.java
 E:\springboot\ecommerce-backend-app\order-service\src\main\java\com\aditya\order\dtos\OrderMetaData.java
 E:\springboot\ecommerce-backend-app\order-service\src\main\java\com\aditya\order\models\ShippingAddress.java
+E:\springboot\ecommerce-backend-app\order-service\src\main\java\com\aditya\order\models\OrderEntity.java

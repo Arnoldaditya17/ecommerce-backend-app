@@ -4,10 +4,9 @@ package com.aditya.order.models;
 import com.aditya.order.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.security.core.userdetails.User;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+
 
 @Entity
 @Data
@@ -25,7 +24,7 @@ public class OrderEntity {
 
     private OrderStatus status;
 
-    private Boolean active;
+    private boolean active;
 
 //    @ManyToOne
 //    @JoinColumn(name = "shipping_address_id")
@@ -33,8 +32,6 @@ public class OrderEntity {
 //
 //    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private Set<OrderItemEntity> orderItems;
-
-
 
 
 }

@@ -4,10 +4,11 @@ package com.aditya.inventory.services;
 import com.aditya.inventory.dto.InventoryDto;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface InventoryService {
 
-    InventoryDto getInventory(String id);
+    InventoryDto getInventory(UUID id);
 
     List<InventoryDto> getAllInventories();
 
@@ -15,6 +16,6 @@ public interface InventoryService {
 
     InventoryDto updateInventory(InventoryDto inventoryDto);
 
-    void deleteInventory(String id);
+    void deleteInventory(UUID id);
 
 }

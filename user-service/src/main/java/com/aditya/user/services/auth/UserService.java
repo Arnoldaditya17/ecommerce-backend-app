@@ -1,7 +1,6 @@
 package com.aditya.user.services.auth;
 
 
-
 import com.aditya.user.dtos.RegisterUserDto;
 import com.aditya.user.enums.RoleEnum;
 import com.aditya.user.models.Role;
@@ -18,9 +17,9 @@ import java.util.Optional;
 
 @Service
 public class UserService {
+
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-
     private final PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
@@ -45,10 +44,10 @@ public class UserService {
         }
 
         var user = new User();
-                user.setFullName(input.getFullName());
-               user.setEmail(input.getEmail());
-                user.setPassword(passwordEncoder.encode(input.getPassword()));
-                user.setRole(optionalRole.get());
+        user.setName(input.getName());
+        user.setEmail(input.getEmail());
+        user.setPassword(passwordEncoder.encode(input.getPassword()));
+        user.setRole(optionalRole.get());
 
         return userRepository.save(user);
     }

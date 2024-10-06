@@ -40,7 +40,7 @@ public class AdminSeeder implements ApplicationListener<ContextRefreshedEvent> {
 
     private void createSuperAdministrator() {
         RegisterUserDto userDto = new RegisterUserDto();
-        userDto.setFullName("Super Admin");
+        userDto.setName("Super Admin");
                 userDto.setEmail("super.admin@email.com");
                        userDto.setPassword("123456");
 
@@ -52,7 +52,7 @@ public class AdminSeeder implements ApplicationListener<ContextRefreshedEvent> {
         }
 
         var user = new User();
-                user.setFullName(userDto.getFullName());
+                user.setName(userDto.getName());
                user.setEmail(userDto.getEmail());
                 user.setPassword(passwordEncoder.encode(userDto.getPassword()));
                user.setRole(optionalRole.get());

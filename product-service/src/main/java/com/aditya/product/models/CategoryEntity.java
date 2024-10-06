@@ -3,12 +3,13 @@ package com.aditya.product.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
 @Data
 @Table(name = "categories")
-public class CategoryEntity {
+public class CategoryEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;

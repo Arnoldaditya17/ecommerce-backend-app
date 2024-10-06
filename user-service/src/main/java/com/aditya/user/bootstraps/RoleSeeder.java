@@ -1,7 +1,6 @@
 package com.aditya.user.bootstraps;
 
 
-
 import com.aditya.user.enums.RoleEnum;
 import com.aditya.user.models.Role;
 import com.aditya.user.repositories.RoleRepository;

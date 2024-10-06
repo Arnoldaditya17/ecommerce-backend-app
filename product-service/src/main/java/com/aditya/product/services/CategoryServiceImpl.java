@@ -102,6 +102,8 @@ public class CategoryServiceImpl implements CategoryService {
 
         category.addProduct(product);
         categoryRepository.save(category);
+
+        //check kar lo guys
         System.out.println("Added product to Category ❤❤❤❤");
 
     }

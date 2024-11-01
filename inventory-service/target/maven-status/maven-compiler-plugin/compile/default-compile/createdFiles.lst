@@ -2,6 +2,7 @@ com\aditya\inventory\Main.class
 com\aditya\inventory\repositories\InventoryRepository.class
 com\aditya\inventory\services\InventoryService.class
 com\aditya\inventory\services\InventoryServiceImpl.class
+com\aditya\inventory\constants\InventoryConstants.class
 com\aditya\inventory\dto\InventoryDto.class
 com\aditya\inventory\controllers\InventoryController.class
 com\aditya\inventory\models\InventoryEntity.class

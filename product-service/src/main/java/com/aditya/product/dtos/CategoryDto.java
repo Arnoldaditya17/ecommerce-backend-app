@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
@@ -11,6 +12,8 @@ import java.util.UUID;
 @Data
 public class CategoryDto implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -7595134426848329298L;
     private UUID id;
 
     @NotNull(message = "title is required !!")
@@ -20,8 +23,8 @@ public class CategoryDto implements Serializable {
     @NotNull
     private String description;
 
-    private Date created_at;
+    private Date createdAt;
 
-    private Date updated_at;
+    private Date updatedAt;
 
 }

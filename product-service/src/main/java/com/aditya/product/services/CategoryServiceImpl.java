@@ -17,9 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -39,10 +37,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto createCategory(CategoryDto categoryDto) {
-        categoryDto.setCreated_at(new Date());
         CategoryEntity category = entityDtoMapper.toEntity(categoryDto, CategoryEntity.class);
         CategoryEntity savedCategory = categoryRepository.save(category);
-
         return entityDtoMapper.toDto(savedCategory, CategoryDto.class);
     }
 
@@ -84,9 +80,7 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryEntity category = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("category not found !", id));
         modelMapper.map(categoryDto, category);
         CategoryEntity savedCategory = categoryRepository.save(category);
-
         return entityDtoMapper.toDto(savedCategory, CategoryDto.class);
-
     }
 
     @Override
@@ -113,7 +107,6 @@ public class CategoryServiceImpl implements CategoryService {
     public List<ProductDto> getProductOfCateg(UUID categoryId) {
         CategoryEntity categoryEntity = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category Not Found", categoryId));
         List<ProductEntity> productEntityList = categoryEntity.getProducts();
-
-        return productEntityList.stream().map(product -> entityDtoMapper.toDto(product,ProductDto.class)).toList();
+        return productEntityList.stream().map(product -> entityDtoMapper.toDto(product, ProductDto.class)).toList();
     }
 }

@@ -8,7 +8,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="config-server" />
-        <module name="cart-service" />
         <module name="payment-service" />
         <module name="inventory-service" />
         <module name="security-service" />
@@ -22,6 +21,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="cart-service" target="17" />
       <module name="config-service" target="17" />
       <module name="domain-core" target="17" />
       <module name="ecom-app-boot" target="17" />

@@ -1,15 +1,19 @@
 package com.aditya.product.models;
 
+import com.aditya.product.constants.CategoryConstants;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
 @Entity
 @Data
-@Table(name = "categories")
+@Table(name = CategoryConstants.CATEGORY_TABLE_NAME)
 public class CategoryEntity implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 218451937471973394L;
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -20,9 +24,11 @@ public class CategoryEntity implements Serializable {
 
     private String image;
 
-    private Date created_at;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
 
-    private Date updated_at;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
@@ -41,6 +47,16 @@ public class CategoryEntity implements Serializable {
     public void removeProduct(ProductEntity product) {
         products.remove(product);
         product.getCategories().remove(this);
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = new Date();
     }
 
 

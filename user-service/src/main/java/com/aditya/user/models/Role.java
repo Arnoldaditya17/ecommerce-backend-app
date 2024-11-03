@@ -1,6 +1,7 @@
 package com.aditya.user.models;
 
 
+import com.aditya.user.constants.RoleConstants;
 import com.aditya.user.enums.RoleEnum;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -9,7 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 
-@Table(name = "roles")
+@Table(name = RoleConstants.ROLE_TABLE_NAME)
 @Entity
 @Data
 public class Role {

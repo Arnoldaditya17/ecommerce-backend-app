@@ -1,4 +1,5 @@
 E:\springboot\ecommerce-backend-app\inventory-service\src\main\java\com\aditya\inventory\models\InventoryEntity.java
+E:\springboot\ecommerce-backend-app\inventory-service\src\main\java\com\aditya\inventory\constants\InventoryConstants.java
 E:\springboot\ecommerce-backend-app\inventory-service\src\main\java\com\aditya\inventory\controllers\InventoryController.java
 E:\springboot\ecommerce-backend-app\inventory-service\src\main\java\com\aditya\inventory\services\InventoryService.java
 E:\springboot\ecommerce-backend-app\inventory-service\src\main\java\com\aditya\inventory\services\InventoryServiceImpl.java

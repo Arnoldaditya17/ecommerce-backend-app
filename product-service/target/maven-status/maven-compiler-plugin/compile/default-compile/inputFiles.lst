@@ -1,11 +1,12 @@
+E:\springboot\ecommerce-backend-app\product-service\src\main\java\com\aditya\product\utils\ProductMetaDataConverter.java
 E:\springboot\ecommerce-backend-app\product-service\src\main\java\com\aditya\product\services\CategoryService.java
 E:\springboot\ecommerce-backend-app\product-service\src\main\java\com\aditya\product\services\CategoryServiceImpl.java
 E:\springboot\ecommerce-backend-app\product-service\src\main\java\com\aditya\product\utils\ProductCsvRepresentation.java
 E:\springboot\ecommerce-backend-app\product-service\src\main\java\com\aditya\product\dtos\ProductDto.java
 E:\springboot\ecommerce-backend-app\product-service\src\main\java\com\aditya\product\dtos\CategoryDto.java
+E:\springboot\ecommerce-backend-app\product-service\src\main\java\com\aditya\product\models\ProductMetaData.java
 E:\springboot\ecommerce-backend-app\product-service\src\main\java\com\aditya\product\services\ProductServiceImpl.java
 E:\springboot\ecommerce-backend-app\product-service\src\main\java\com\aditya\product\constants\ProductConstants.java
-E:\springboot\ecommerce-backend-app\product-service\src\main\java\com\aditya\product\dtos\ProductMetaData.java
 E:\springboot\ecommerce-backend-app\product-service\src\main\java\com\aditya\product\controller\CategoryController.java
 E:\springboot\ecommerce-backend-app\product-service\src\main\java\com\aditya\product\repositories\CategoryRepository.java
 E:\springboot\ecommerce-backend-app\product-service\src\main\java\com\aditya\product\repositories\ProductRepository.java

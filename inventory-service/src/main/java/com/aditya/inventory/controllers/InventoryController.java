@@ -1,5 +1,6 @@
 package com.aditya.inventory.controllers;
 
+import com.aditya.inventory.dto.CreatedInventoryDto;
 import com.aditya.inventory.dto.InventoryDto;
 import com.aditya.inventory.services.InventoryService;
 import org.springframework.data.domain.Page;
@@ -21,14 +22,14 @@ public class InventoryController {
 
 
     @PostMapping
-    public ResponseEntity<InventoryDto> createInventory(@RequestBody InventoryDto inventoryDto) {
-        InventoryDto savedInventory=inventoryService.addInventory(inventoryDto);
+    public ResponseEntity<CreatedInventoryDto> createInventory(@RequestBody CreatedInventoryDto createdInventoryDto) {
+        CreatedInventoryDto savedInventory=inventoryService.addInventory(createdInventoryDto);
         return new ResponseEntity<>(savedInventory, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<Page<InventoryDto>> getAllInventory(Pageable pageable) {
-        Page<InventoryDto> inventories = inventoryService.getAllInventory(pageable);
+    public ResponseEntity<Page<CreatedInventoryDto>> getAllInventory(Pageable pageable) {
+        Page<CreatedInventoryDto> inventories = inventoryService.getAllInventory(pageable);
         return ResponseEntity.ok(inventories);
     }
 

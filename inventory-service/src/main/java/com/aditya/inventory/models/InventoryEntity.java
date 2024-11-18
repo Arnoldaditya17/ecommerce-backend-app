@@ -32,7 +32,7 @@ public class InventoryEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "skuCode", referencedColumnName = "skuCode", nullable = false)
     private ProductEntity product;
 

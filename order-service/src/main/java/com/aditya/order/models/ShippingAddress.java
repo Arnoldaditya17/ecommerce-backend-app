@@ -1,9 +1,9 @@
 package com.aditya.order.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.UUID;
 
 @Entity
 @Data
@@ -11,11 +11,14 @@ import lombok.Data;
 public class ShippingAddress {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String street;
 
     private String city;
+
+    private String houseDetail;
 
     private String state;
 

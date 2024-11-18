@@ -1,6 +1,7 @@
 package com.aditya.inventory.services;
 
 
+import com.aditya.inventory.dto.CreatedInventoryDto;
 import com.aditya.inventory.dto.InventoryDto;
 import com.aditya.inventory.models.InventoryEntity;
 import com.aditya.inventory.repositories.InventoryRepository;
@@ -32,13 +33,12 @@ public class InventoryServiceImpl implements InventoryService {
 
 
     @Override
-    public InventoryDto addInventory(InventoryDto inventoryDto) {
-        ProductEntity product = productRepository.findBySkuCode(inventoryDto.getSkuCode()).orElseThrow(() -> new RuntimeException("Product with SKU " + inventoryDto.getSkuCode() + " not found"));
-
-        InventoryEntity inventoryEntity = modelMapper.map(inventoryDto, InventoryEntity.class);
+    public CreatedInventoryDto addInventory(CreatedInventoryDto createdInventoryDto) {
+        ProductEntity product = productRepository.findBySkuCode(createdInventoryDto.getSkuCode()).orElseThrow(() -> new RuntimeException("Product with SKU " + createdInventoryDto.getSkuCode() + " not found"));
+        InventoryEntity inventoryEntity = modelMapper.map(createdInventoryDto, InventoryEntity.class);
         inventoryEntity.setProduct(product);
         InventoryEntity savedInventory = inventoryRepository.save(inventoryEntity);
-        InventoryDto savedInventoryDto = modelMapper.map(savedInventory, InventoryDto.class);
+        CreatedInventoryDto savedInventoryDto = modelMapper.map(savedInventory, CreatedInventoryDto.class);
         savedInventoryDto.setSkuCode(product.getSkuCode());
 
         return savedInventoryDto;
@@ -69,12 +69,13 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public Page<InventoryDto> getAllInventory(Pageable pageable) {
+    public Page<CreatedInventoryDto> getAllInventory(Pageable pageable) {
         Page<InventoryEntity> inventoryEntityPage = inventoryRepository.findAll(pageable);
 
-        List<InventoryDto> dtoList = inventoryEntityPage.getContent().stream().map(inventoryEntity -> {
-            InventoryDto inventoryDto = modelMapper.map(inventoryEntity, InventoryDto.class);
+        List<CreatedInventoryDto> dtoList = inventoryEntityPage.getContent().stream().map(inventoryEntity -> {
+            CreatedInventoryDto inventoryDto = modelMapper.map(inventoryEntity, CreatedInventoryDto.class);
             inventoryDto.setSkuCode(inventoryEntity.getProduct().getSkuCode());
+            inventoryDto.setProduct(inventoryEntity.getProduct());
             return inventoryDto;
         }).toList();
 

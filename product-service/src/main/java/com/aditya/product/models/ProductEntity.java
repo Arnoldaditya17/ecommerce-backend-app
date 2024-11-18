@@ -1,18 +1,22 @@
 package com.aditya.product.models;
 import com.aditya.product.constants.ProductConstants;
+
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Data
+@Slf4j
 @Table(name = ProductConstants.PRODUCT_TABLE_NAME)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ProductEntity implements Serializable {
 
     @Serial
@@ -40,8 +44,12 @@ public class ProductEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
+    private ProductMetaData productMetaData;
+
     @ManyToMany(mappedBy = "products")
-    private List<CategoryEntity> categories = new ArrayList<>();
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<CategoryEntity> categories = new HashSet<>();
 
     public void addCategory(CategoryEntity category) {
         categories.add(category);

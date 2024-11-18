@@ -1,37 +1,50 @@
 package com.aditya.order.models;
 
 
+import com.aditya.order.constants.OrderConstants;
 import com.aditya.order.enums.OrderStatus;
+import com.aditya.user.models.User;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 
 @Entity
 @Data
-@Table(name = "orders")
+@Table(name = OrderConstants.ORDER_TABLE_NAME)
 public class OrderEntity {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
-    private Long user_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id",nullable = false)
+    private User user;
 
     private LocalDateTime orderDate;
 
     private String paymentMethod;
 
-    private OrderStatus status;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus orderStatus;
+
+    private String razorPayOrderId;
 
     private boolean active;
 
-//    @ManyToOne
-//    @JoinColumn(name = "shipping_address_id")
-//    private ShippingAddress shippingAddress;
-//
-//    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private Set<OrderItemEntity> orderItems;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "orderEntity",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<OrderItemEntity> orderItems = new ArrayList<>();
+
+    public void addItem(OrderItemEntity item) {
+        item.setOrderEntity(this);
+        this.orderItems.add(item);
+    }
 
 
 }

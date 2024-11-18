@@ -3,9 +3,9 @@ com\aditya\product\utils\ProductCsvRepresentation.class
 com\aditya\product\dtos\ProductDto.class
 com\aditya\product\services\CategoryServiceImpl.class
 com\aditya\product\controller\CategoryController.class
-com\aditya\product\dtos\ProductMetaData.class
 com\aditya\product\models\CategoryEntity.class
 com\aditya\product\models\ProductEntity.class
+com\aditya\product\models\ProductMetaData.class
 com\aditya\product\services\ProductServiceImpl.class
 com\aditya\product\constants\ProductConstants.class
 com\aditya\product\services\CategoryService.class
@@ -15,3 +15,4 @@ com\aditya\product\repositories\CategoryRepository.class
 com\aditya\product\utils\ProductCsvRepresentation$ProductCsvRepresentationBuilder.class
 com\aditya\product\dtos\CategoryDto.class
 com\aditya\product\repositories\ProductRepository.class
+com\aditya\product\utils\ProductMetaDataConverter.class

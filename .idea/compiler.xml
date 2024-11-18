@@ -10,23 +10,23 @@
         <module name="config-server" />
         <module name="payment-service" />
         <module name="inventory-service" />
-        <module name="security-service" />
         <module name="product-service" />
         <module name="common-utils" />
         <module name="app-starter" />
         <module name="user-service" />
         <module name="order-service" />
         <module name="notification-service" />
-        <module name="admin-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="admin-service" target="17" />
       <module name="cart-service" target="17" />
       <module name="config-service" target="17" />
       <module name="domain-core" target="17" />
       <module name="ecom-app-boot" target="17" />
       <module name="ecom-common" target="17" />
       <module name="repository-core" target="17" />
+      <module name="security-service" target="17" />
       <module name="service-core" target="17" />
       <module name="shipping-service" target="17" />
     </bytecodeTargetLevel>

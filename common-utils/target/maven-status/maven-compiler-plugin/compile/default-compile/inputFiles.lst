@@ -7,4 +7,5 @@ E:\springboot\ecommerce-backend-app\common-utils\src\main\java\com\aditya\common
 E:\springboot\ecommerce-backend-app\common-utils\src\main\java\com\aditya\common\dtos\CustomPageResponse.java
 E:\springboot\ecommerce-backend-app\common-utils\src\main\java\com\aditya\common\exceptions\ResourceNotFoundException.java
 E:\springboot\ecommerce-backend-app\common-utils\src\main\java\com\aditya\common\utils\EntityDtoMapper.java
+E:\springboot\ecommerce-backend-app\common-utils\src\main\java\com\aditya\common\config\HibernateConfig.java
 E:\springboot\ecommerce-backend-app\common-utils\src\main\java\com\aditya\common\dtos\CustomMessage.java

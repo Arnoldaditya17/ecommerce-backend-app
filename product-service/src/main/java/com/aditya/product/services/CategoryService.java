@@ -3,8 +3,10 @@ package com.aditya.product.services;
 import com.aditya.product.dtos.CategoryDto;
 import com.aditya.common.dtos.CustomPageResponse;
 import com.aditya.product.dtos.ProductDto;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public interface CategoryService {
@@ -23,6 +25,8 @@ public interface CategoryService {
 
     void addProductToCategory(UUID categoryId, UUID productId);
 
-    List<ProductDto> getProductOfCateg(UUID categoryId);
+    CategoryDto removeProductFromCategory(UUID categoryId, UUID productId);
+
+    Set<ProductDto> getProductsByCategoryId(UUID categoryId);
 
 }

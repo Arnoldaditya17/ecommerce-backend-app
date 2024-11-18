@@ -10,7 +10,6 @@ import com.aditya.user.services.auth.AuthenticationService;
 import com.aditya.user.services.auth.JwtService;
 import com.aditya.user.services.auth.RefreshTokenService;
 import com.aditya.user.services.mail.OtpGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,21 +24,18 @@ public class AuthenticationController {
     private final ConcurrentHashMap<String, String> otpStore = new ConcurrentHashMap<>();
 
     private final JwtService jwtService;
-
     private final AuthenticationService authenticationService;
-
     private final RefreshTokenService refreshTokenService;
-
     private final UserRepository userRepository;
+    private final EmailService emailService;
 
-    @Autowired
-    EmailService emailService;
 
-    public AuthenticationController(JwtService jwtService, AuthenticationService authenticationService, RefreshTokenService refreshTokenService, UserRepository userRepository) {
+    public AuthenticationController(JwtService jwtService, AuthenticationService authenticationService, RefreshTokenService refreshTokenService, UserRepository userRepository, EmailService emailService) {
         this.jwtService = jwtService;
         this.authenticationService = authenticationService;
         this.refreshTokenService = refreshTokenService;
         this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
     @PostMapping("/signup")
@@ -94,15 +90,13 @@ public class AuthenticationController {
     }
 
     @PostMapping("/verify-otp")
-    public ResponseEntity<Boolean> verifyOtp(@RequestParam("email") String email,
-                                             @RequestParam("otp") String userProvidedOtp) {
+    public ResponseEntity<Boolean> verifyOtp(@RequestParam("email") String email,@RequestParam("otp") String userProvidedOtp) {
         boolean isOTPVerified = isVerified(email, userProvidedOtp);
         otpStore.remove(email);
         return ResponseEntity.ok(isOTPVerified);
     }
 
     public boolean isVerified(String email, String userProvidedOtp) {
-
         if (!otpStore.containsKey(email)) {
             return false;
         }

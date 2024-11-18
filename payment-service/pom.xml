@@ -8,6 +8,14 @@
         <artifactId>ecommerce-backend-app</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+    <dependencies>
+        <dependency>
+            <groupId>com.razorpay</groupId>
+            <artifactId>razorpay-java</artifactId>
+            <version>1.4.3</version>
+        </dependency>
+    </dependencies>
+
 
     <artifactId>payment-service</artifactId>
 

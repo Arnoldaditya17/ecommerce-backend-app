@@ -9,11 +9,13 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/admin-service/pom.xml" />
         <option value="$PROJECT_DIR$/cart-service/pom.xml" />
         <option value="$PROJECT_DIR$/config-service/pom.xml" />
         <option value="$PROJECT_DIR$/domain-core/pom.xml" />
         <option value="$PROJECT_DIR$/ecom-auth/pom.xml" />
         <option value="$PROJECT_DIR$/repository-core/pom.xml" />
+        <option value="$PROJECT_DIR$/security-service/pom.xml" />
         <option value="$PROJECT_DIR$/service-core/pom.xml" />
         <option value="$PROJECT_DIR$/shipping-service/pom.xml" />
       </set>

@@ -1,3 +1,4 @@
+com\aditya\inventory\dto\CreatedInventoryDto.class
 com\aditya\inventory\Main.class
 com\aditya\inventory\repositories\InventoryRepository.class
 com\aditya\inventory\services\InventoryService.class

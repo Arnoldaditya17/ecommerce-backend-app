@@ -7,6 +7,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -29,11 +30,9 @@ public class ProductDto implements Serializable {
 
     private String image;
 
-    private String category;
-
     private Date createdAt;
 
     private Date updatedAt;
 
-    private List<CategoryEntity> categories;
+    private Set<CategoryEntity> categories;
 }

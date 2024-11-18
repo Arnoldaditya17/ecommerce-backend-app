@@ -3,7 +3,9 @@ package com.aditya.product.services;
 import com.aditya.common.exceptions.ResourceNotFoundException;
 import com.aditya.common.utils.EntityDtoMapper;
 import com.aditya.product.dtos.ProductDto;
+import com.aditya.product.models.CategoryEntity;
 import com.aditya.product.models.ProductEntity;
+import com.aditya.product.repositories.CategoryRepository;
 import com.aditya.product.repositories.ProductRepository;
 import com.aditya.product.utils.ProductCsvRepresentation;
 import com.opencsv.bean.CsvToBean;
@@ -32,11 +34,13 @@ public class ProductServiceImpl implements ProductService {
     private final EntityDtoMapper entityDtoMapper;
     private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
+    private final CategoryRepository categoryRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository, EntityDtoMapper entityDtoMapper, ModelMapper modelMapper) {
+    public ProductServiceImpl(ProductRepository productRepository, EntityDtoMapper entityDtoMapper, ModelMapper modelMapper, CategoryRepository categoryRepository) {
         this.productRepository = productRepository;
         this.entityDtoMapper = entityDtoMapper;
         this.modelMapper = modelMapper;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
@@ -50,6 +54,22 @@ public class ProductServiceImpl implements ProductService {
         Page<ProductEntity> products = productRepository.findAll(pageable);
         List<ProductDto> dtoList = products.getContent().stream().map(product -> modelMapper.map(product, ProductDto.class)).toList();
         return new PageImpl<>(dtoList, pageable, products.getTotalElements());
+    }
+
+    @Override
+    public void addCategoryToProduct(UUID productId, UUID categoryId) {
+        ProductEntity product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product Not found !!", productId));
+         CategoryEntity category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category Not found !!", categoryId));
+         product.addCategory(category);
+        productRepository.save(product);
+    }
+
+    @Override
+    public void removeCategoryFromProduct(UUID productId, UUID categoryId) {
+        ProductEntity product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("Product Not found !!", productId));
+        CategoryEntity category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category Not found !!", categoryId));
+        product.removeCategory(category);
+        productRepository.save(product);
     }
 
     @Override
@@ -84,15 +104,10 @@ public class ProductServiceImpl implements ProductService {
         return productEntityList.stream().map(product -> modelMapper.map(product, ProductDto.class)).toList();
     }
 
-
     @Override
     public Integer uploadFile(MultipartFile file) throws IOException {
-        // Fetch all existing SKUs from the database
-        Set<String> existingSkus = productRepository.findAllSkus();//Isko apan Caching implement karke fast bana sakte hai
-
-
-        Set<ProductDto> productList = parseCsv(file, existingSkus); // Pass existing SKUs to the CSV parser
-
+        Set<String> existingSkus = productRepository.findAllSkus();
+        Set<ProductDto> productList = parseCsv(file, existingSkus);
         Set<ProductEntity> productEntities = productList.stream()
                 .map(productDto -> modelMapper.map(productDto, ProductEntity.class))
                 .collect(Collectors.toSet());
@@ -104,13 +119,11 @@ public class ProductServiceImpl implements ProductService {
         try (Reader reader = new BufferedReader(new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8))) {
             HeaderColumnNameMappingStrategy<ProductCsvRepresentation> strategy = new HeaderColumnNameMappingStrategy<>();
             strategy.setType(ProductCsvRepresentation.class);
-
             CsvToBean<ProductCsvRepresentation> csvToBean = new CsvToBeanBuilder<ProductCsvRepresentation>(reader)
                     .withMappingStrategy(strategy)
                     .withIgnoreEmptyLine(true)
                     .withIgnoreLeadingWhiteSpace(true)
                     .build();
-
             return csvToBean.parse()
                     .stream()
                     .filter(csvLine -> !existingSkus.contains(csvLine.getSkuCode()))

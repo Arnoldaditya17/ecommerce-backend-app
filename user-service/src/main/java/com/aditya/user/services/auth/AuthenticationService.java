@@ -1,7 +1,6 @@
 package com.aditya.user.services.auth;
 
 
-
 import com.aditya.user.dtos.LoginUserDto;
 import com.aditya.user.dtos.RegisterUserDto;
 import com.aditya.user.enums.RoleEnum;
@@ -20,18 +19,13 @@ import java.util.Optional;
 
 @Service
 public class AuthenticationService {
+
     private final UserRepository userRepository;
-
     private final PasswordEncoder passwordEncoder;
-
     private final AuthenticationManager authenticationManager;
     private final RoleRepository roleRepository;
 
-    public AuthenticationService(
-            UserRepository userRepository,
-            AuthenticationManager authenticationManager,
-            PasswordEncoder passwordEncoder,
-            RoleRepository roleRepository) {
+    public AuthenticationService(UserRepository userRepository, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, RoleRepository roleRepository) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -39,8 +33,8 @@ public class AuthenticationService {
     }
 
     public User signup(RegisterUserDto input) {
-        Optional<Role> optionalRole=roleRepository.findByName(RoleEnum.USER);
-        if(optionalRole.isEmpty()) {
+        Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.USER);
+        if (optionalRole.isEmpty()) {
             return null;
         }
         User user = new User();

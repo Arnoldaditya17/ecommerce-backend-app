@@ -20,8 +20,6 @@ public class InventoryDto implements Serializable {
 
     private Integer quantity;
 
-    private ProductEntity product;
-
     private Date createdAt;
 
     private Date updatedAt;

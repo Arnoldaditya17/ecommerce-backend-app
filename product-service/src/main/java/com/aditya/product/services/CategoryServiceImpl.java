@@ -18,7 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -58,7 +60,6 @@ public class CategoryServiceImpl implements CategoryService {
         customPageResponse.setTotalElements(categoryPage.getTotalElements());
         customPageResponse.setTotalPages(categoryPage.getTotalPages());
         customPageResponse.setContent(categoryDtoList);
-
         return customPageResponse;
     }
 
@@ -89,24 +90,34 @@ public class CategoryServiceImpl implements CategoryService {
         return null;
     }
 
+    @Transactional
     @Override
     public void addProductToCategory(UUID categoryId, UUID productId) {
         CategoryEntity category = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("category not found !", categoryId));
         ProductEntity product = productRepository.findById(productId).orElseThrow(() -> new ResourceNotFoundException("product not found !", productId));
-
         category.addProduct(product);
         categoryRepository.save(category);
-
-        //check kar lo guys
-        System.out.println("Added product to Category ❤❤❤❤");
-
     }
 
     @Override
-    @Transactional
-    public List<ProductDto> getProductOfCateg(UUID categoryId) {
-        CategoryEntity categoryEntity = categoryRepository.findById(categoryId).orElseThrow(() -> new ResourceNotFoundException("Category Not Found", categoryId));
-        List<ProductEntity> productEntityList = categoryEntity.getProducts();
-        return productEntityList.stream().map(product -> entityDtoMapper.toDto(product, ProductDto.class)).toList();
+    public CategoryDto removeProductFromCategory(UUID categoryId, UUID productId) {
+        CategoryEntity category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found", categoryId));
+        ProductEntity product = productRepository.findById(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found", productId));
+        category.removeProduct(product);
+        CategoryEntity updatedCategory = categoryRepository.save(category);
+        return modelMapper.map(updatedCategory, CategoryDto.class);
     }
+
+
+    public Set<ProductDto> getProductsByCategoryId(UUID categoryId) {
+        CategoryEntity category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found", categoryId));
+        return category.getProducts().stream()
+                .map(product -> modelMapper.map(product, ProductDto.class))
+                .collect(Collectors.toSet());
+    }
+
+
 }

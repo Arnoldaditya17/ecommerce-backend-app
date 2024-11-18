@@ -7,6 +7,7 @@ import lombok.Data;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 import java.util.UUID;
 
 @Data
@@ -22,6 +23,10 @@ public class CategoryDto implements Serializable {
 
     @NotNull
     private String description;
+
+    private String image;
+
+    private Set<ProductDto> products; ;
 
     private Date createdAt;
 

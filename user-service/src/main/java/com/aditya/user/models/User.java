@@ -18,8 +18,10 @@ import java.util.List;
 @Table(name = UserConstants.USER_TABLE_NAME)
 @Data
 public class User implements UserDetails {
+
     @Serial
     private static final long serialVersionUID = 2293688585236948767L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
@@ -50,7 +52,6 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getName().toString());
-
         return List.of(authority);
     }
 

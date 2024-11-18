@@ -1,6 +1,5 @@
 package com.aditya.product.controller;
 
-import com.aditya.common.dtos.CustomMessage;
 import com.aditya.product.dtos.ProductDto;
 import com.aditya.product.services.ProductService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -13,8 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -25,6 +23,7 @@ public class ProductController {
 
     public ProductController(ProductService productService) {
         this.productService = productService;
+
     }
 
     @PostMapping
@@ -36,6 +35,11 @@ public class ProductController {
     public ResponseEntity<Integer> uploadStudents(@RequestParam("file") MultipartFile file) throws IOException {
         return ResponseEntity.ok(productService.uploadFile(file));
 
+    }
+    @PostMapping("/{productId}/category/{categoryId}")
+    public ResponseEntity<Void> addCategoryToProduct(@PathVariable UUID productId, @PathVariable UUID categoryId) {
+        productService.addCategoryToProduct(productId,categoryId);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("/{id}")
@@ -56,21 +60,25 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<CustomMessage> deleteProduct(@PathVariable UUID id) {
+    public ResponseEntity<Map<String, Object>> deleteProduct(@PathVariable UUID id) {
+        ProductDto productDto = productService.getProductById(id);
         productService.deleteProductById(id);
-        CustomMessage customMessage = new CustomMessage();
-        customMessage.setMessage("product deleted successfully");
-        customMessage.setSuccess(true);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(customMessage);
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Product deleted successfully");
+        response.put("deletedProduct", productDto);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }
 
-    @DeleteMapping()
-    public ResponseEntity<CustomMessage> deleteAllProducts() {
+    @DeleteMapping
+    public ResponseEntity<Void> deleteAllProducts() {
         productService.deleteAllProducts();
-        CustomMessage customMessage = new CustomMessage();
-        customMessage.setMessage("all product deleted successfully");
-        customMessage.setSuccess(true);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new CustomMessage());
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{productId}/category/{categoryId}")
+    public ResponseEntity<Void> removeCategoryFromProduct(@PathVariable UUID productId, @PathVariable UUID categoryId) {
+        productService.removeCategoryFromProduct(productId,categoryId);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PutMapping("/{id}")

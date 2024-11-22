@@ -1,9 +1,12 @@
 package com.aditya.order.controllers;
 
-import com.aditya.order.dtos.OrderDto;
+import com.aditya.order.dtos.CartRequest;
+import com.aditya.order.models.OrderEntity;
 import com.aditya.order.services.OrderService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,11 +21,11 @@ public class OrderController {
     }
 
 
-    @PostMapping("/add-to-cart")
-    public ResponseEntity<OrderDto>  createOrder(OrderDto orderDto) {
-        return null;
-    }
+    @PostMapping("/cart")
+    public ResponseEntity<OrderEntity> createCart(@RequestBody CartRequest cartRequest) {
 
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderService.createCart(cartRequest));
+    }
 
 
 }

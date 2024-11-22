@@ -1,5 +1,6 @@
 package com.aditya.user.services.auth;
 
+import com.aditya.user.models.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -50,6 +51,8 @@ public class JwtService {
             UserDetails userDetails,
             long expiration
     ) {
+        extraClaims.put("role", userDetails.getAuthorities());
+        extraClaims.put("userId", ((User) userDetails).getId());
         return Jwts
                 .builder()
                 .setClaims(extraClaims)

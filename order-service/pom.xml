@@ -29,7 +29,7 @@
         </dependency>
         <dependency>
             <groupId>com.aditya</groupId>
-            <artifactId>product-service</artifactId>
+            <artifactId>inventory-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

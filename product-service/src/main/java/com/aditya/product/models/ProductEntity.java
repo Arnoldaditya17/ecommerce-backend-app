@@ -1,6 +1,8 @@
 package com.aditya.product.models;
+
 import com.aditya.product.constants.ProductConstants;
 
+import com.aditya.product.utils.ProductMetaDataConverter;
 import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -44,6 +46,7 @@ public class ProductEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
+    @Convert(converter = ProductMetaDataConverter.class)
     private ProductMetaData productMetaData;
 
     @ManyToMany(mappedBy = "products")

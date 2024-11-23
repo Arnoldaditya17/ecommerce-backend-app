@@ -1,6 +1,5 @@
 package com.aditya.inventory.models;
 
-
 import com.aditya.inventory.constants.InventoryConstants;
 import com.aditya.product.models.ProductEntity;
 import jakarta.persistence.*;
@@ -16,34 +15,43 @@ import java.util.UUID;
 @Table(name = InventoryConstants.INVENTORY_TABLE_NAME)
 public class InventoryEntity implements Serializable {
 
-    @Serial
-    private static final long serialVersionUID = 4396187479270194982L;
+	@Serial
+	private static final long serialVersionUID = 4396187479270194982L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.UUID)
+	private UUID id;
 
-    @Column(name = "quantity")
-    private Integer quantity;
+	@Column(name = "quantity")
+	private Integer quantity;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+	@Column(name = "market_price")
+	private Double marketPrice;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedAt;
+	@Column(name = "sale_price")
+	private Double salePrice;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "skuCode", referencedColumnName = "skuCode", nullable = false)
-    private ProductEntity product;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdAt;
 
-    @PrePersist
-    protected void onCreate() {
-        createdAt = new Date();
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updatedAt;
 
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = new Date();
-    }
+	@Column()
+	private String skuCode;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "skuCode", referencedColumnName = "skuCode", nullable = false)
+	private ProductEntity product;
+
+	@PrePersist
+	protected void onCreate() {
+		createdAt = new Date();
+	}
+
+	@PreUpdate
+	protected void onUpdate() {
+		updatedAt = new Date();
+	}
 
 }

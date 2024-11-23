@@ -1,6 +1,5 @@
 package com.aditya.inventory.services;
 
-
 import com.aditya.inventory.dto.CreatedInventoryDto;
 import com.aditya.inventory.dto.InventoryDto;
 import com.aditya.inventory.models.InventoryEntity;
@@ -14,78 +13,79 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+import java.util.Optional;
 
 @Service
 public class InventoryServiceImpl implements InventoryService {
 
+	private final InventoryRepository inventoryRepository;
 
-    private final InventoryRepository inventoryRepository;
-    private final ProductRepository productRepository;
-    private final ModelMapper modelMapper;
+	private final ProductRepository productRepository;
 
-    public InventoryServiceImpl(InventoryRepository inventoryRepository, ProductRepository productRepository, ModelMapper modelMapper) {
+	private final ModelMapper modelMapper;
 
-        this.inventoryRepository = inventoryRepository;
-        this.productRepository = productRepository;
-        this.modelMapper = modelMapper;
-    }
+	public InventoryServiceImpl(InventoryRepository inventoryRepository, ProductRepository productRepository, ModelMapper modelMapper) {
+		this.inventoryRepository = inventoryRepository;
+		this.productRepository = productRepository;
+		this.modelMapper = modelMapper;
+	}
 
+	@Override
+	public CreatedInventoryDto createInventory(CreatedInventoryDto createdInventoryDto) {
+		ProductEntity product = productRepository.findBySkuCode(createdInventoryDto.getSkuCode())
+				.orElseThrow(() -> new RuntimeException("Product with SKU " + createdInventoryDto.getSkuCode() + " not found"));
+		InventoryEntity inventoryEntity = modelMapper.map(createdInventoryDto, InventoryEntity.class);
+		inventoryEntity.setProduct(product);
+		InventoryEntity savedInventory = inventoryRepository.save(inventoryEntity);
+		CreatedInventoryDto savedInventoryDto = modelMapper.map(savedInventory, CreatedInventoryDto.class);
+		savedInventoryDto.setSkuCode(product.getSkuCode());
+		return savedInventoryDto;
+	}
 
-    @Override
-    public CreatedInventoryDto addInventory(CreatedInventoryDto createdInventoryDto) {
-        ProductEntity product = productRepository.findBySkuCode(createdInventoryDto.getSkuCode()).orElseThrow(() -> new RuntimeException("Product with SKU " + createdInventoryDto.getSkuCode() + " not found"));
-        InventoryEntity inventoryEntity = modelMapper.map(createdInventoryDto, InventoryEntity.class);
-        inventoryEntity.setProduct(product);
-        InventoryEntity savedInventory = inventoryRepository.save(inventoryEntity);
-        CreatedInventoryDto savedInventoryDto = modelMapper.map(savedInventory, CreatedInventoryDto.class);
-        savedInventoryDto.setSkuCode(product.getSkuCode());
+	@Override
+	public InventoryDto updateInventory(InventoryDto inventoryDto) {
+		InventoryEntity existingInventory = inventoryRepository.findBySkuCode(inventoryDto.getSkuCode())
+				.orElseThrow(() -> new RuntimeException("No inventory found for SKU " + inventoryDto.getSkuCode()));
+		existingInventory.setQuantity(inventoryDto.getQuantity());
+		InventoryEntity updatedInventory = inventoryRepository.save(existingInventory);
+		return modelMapper.map(updatedInventory, InventoryDto.class);
+	}
 
-        return savedInventoryDto;
-    }
+	@Override
+	public InventoryDto getInventory(String skuCode) {
+		InventoryEntity inventoryEntity = inventoryRepository.findBySkuCode(skuCode)
+				.orElseThrow(() -> new RuntimeException("No inventory found for SKU " + skuCode));
 
-    @Override
-    public InventoryDto updateInventory(InventoryDto inventoryDto) {
+		InventoryDto inventoryDto = modelMapper.map(inventoryEntity, InventoryDto.class);
 
-        InventoryEntity existingInventory = inventoryRepository.findByProduct_SkuCode(inventoryDto.getSkuCode()).orElseThrow(() -> new RuntimeException("No inventory found for SKU " + inventoryDto.getSkuCode()));
+		inventoryDto.setSkuCode(inventoryEntity.getProduct().getSkuCode());
 
-        existingInventory.setQuantity(inventoryDto.getQuantity());
+		return inventoryDto;
+	}
 
-        InventoryEntity updatedInventory = inventoryRepository.save(existingInventory);
+	@Override
+	public Page<CreatedInventoryDto> getAllInventory(Pageable pageable) {
+		Page<InventoryEntity> inventoryEntityPage = inventoryRepository.findAll(pageable);
 
-        return modelMapper.map(updatedInventory, InventoryDto.class);
-    }
+		List<CreatedInventoryDto> dtoList = inventoryEntityPage.getContent().stream().map(inventoryEntity -> {
+			CreatedInventoryDto inventoryDto = modelMapper.map(inventoryEntity, CreatedInventoryDto.class);
+			inventoryDto.setSkuCode(inventoryEntity.getProduct().getSkuCode());
+			inventoryDto.setProduct(inventoryEntity.getProduct());
+			return inventoryDto;
+		}).toList();
 
-    @Override
-    public InventoryDto getInventory(String skuCode) {
+		return new PageImpl<>(dtoList, pageable, inventoryEntityPage.getTotalElements());
+	}
 
-        InventoryEntity inventoryEntity = inventoryRepository.findByProduct_SkuCode(skuCode).orElseThrow(() -> new RuntimeException("No inventory found for SKU " + skuCode));
+	@Override
+	public void deleteInventory(String skuCode) {
+		InventoryEntity inventoryEntity = inventoryRepository.findBySkuCode(skuCode)
+				.orElseThrow(() -> new RuntimeException("No inventory found for SKU " + skuCode));
+		inventoryRepository.delete(inventoryEntity);
+	}
 
-        InventoryDto inventoryDto = modelMapper.map(inventoryEntity, InventoryDto.class);
-
-        inventoryDto.setSkuCode(inventoryEntity.getProduct().getSkuCode());
-
-        return inventoryDto;
-    }
-
-    @Override
-    public Page<CreatedInventoryDto> getAllInventory(Pageable pageable) {
-        Page<InventoryEntity> inventoryEntityPage = inventoryRepository.findAll(pageable);
-
-        List<CreatedInventoryDto> dtoList = inventoryEntityPage.getContent().stream().map(inventoryEntity -> {
-            CreatedInventoryDto inventoryDto = modelMapper.map(inventoryEntity, CreatedInventoryDto.class);
-            inventoryDto.setSkuCode(inventoryEntity.getProduct().getSkuCode());
-            inventoryDto.setProduct(inventoryEntity.getProduct());
-            return inventoryDto;
-        }).toList();
-
-        return new PageImpl<>(dtoList, pageable, inventoryEntityPage.getTotalElements());
-    }
-
-    @Override
-    public void deleteInventory(String skuCode) {
-        InventoryEntity inventoryEntity = inventoryRepository.findByProduct_SkuCode(skuCode).orElseThrow(() -> new RuntimeException("No inventory found for SKU " + skuCode));
-        inventoryRepository.delete(inventoryEntity);
-
-    }
+	@Override
+	public Optional<InventoryEntity> findBySkuCode(String skuCode) {
+		return inventoryRepository.findBySkuCode(skuCode);
+	}
 }

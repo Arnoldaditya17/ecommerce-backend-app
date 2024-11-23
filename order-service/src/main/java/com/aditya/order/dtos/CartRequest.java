@@ -5,7 +5,8 @@ import lombok.Data;
 @Data
 public class CartRequest {
 
-    private String skuCode;
-    private int quantity;
+	private String skuCode;
+
+	private int quantity;
 
 }

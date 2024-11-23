@@ -10,5 +10,5 @@ import java.util.UUID;
 @Repository
 public interface OrderRepository extends JpaRepository<OrderEntity, UUID> {
 
-    OrderEntity findByUserIdAndStatus(Integer userId, OrderStatus orderStatus);
+	OrderEntity findByUserIdAndStatus(Integer userId, OrderStatus orderStatus);
 }

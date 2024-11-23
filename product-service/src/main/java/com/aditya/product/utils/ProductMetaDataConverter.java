@@ -12,25 +12,25 @@ import lombok.extern.slf4j.Slf4j;
 @Converter(autoApply = true)
 public class ProductMetaDataConverter implements AttributeConverter<ProductMetaData, String> {
 
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+	private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    @Override
-    public String convertToDatabaseColumn(ProductMetaData metaData) {
-        try {
-            return objectMapper.writeValueAsString(metaData);
-        } catch (JsonProcessingException jpe) {
-            log.warn("Cannot convert ProductMetaData into JSON", jpe);
-            return null;
-        }
-    }
+	@Override
+	public String convertToDatabaseColumn(ProductMetaData metaData) {
+		try {
+			return objectMapper.writeValueAsString(metaData);
+		} catch (JsonProcessingException jpe) {
+			log.warn("Cannot convert ProductMetaData into JSON", jpe);
+			return null;
+		}
+	}
 
-    @Override
-    public ProductMetaData convertToEntityAttribute(String dbData) {
-        try {
-            return objectMapper.readValue(dbData, ProductMetaData.class);
-        } catch (JsonProcessingException e) {
-            log.warn("Cannot convert JSON into ProductMetaData", e);
-            return null;
-        }
-    }
+	@Override
+	public ProductMetaData convertToEntityAttribute(String dbData) {
+		try {
+			return objectMapper.readValue(dbData, ProductMetaData.class);
+		} catch (JsonProcessingException e) {
+			log.warn("Cannot convert JSON into ProductMetaData", e);
+			return null;
+		}
+	}
 }

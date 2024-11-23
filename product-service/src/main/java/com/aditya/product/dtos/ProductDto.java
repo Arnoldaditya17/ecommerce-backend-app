@@ -1,6 +1,7 @@
 package com.aditya.product.dtos;
 
 import com.aditya.product.models.CategoryEntity;
+import com.aditya.product.models.ProductMetaData;
 import lombok.Data;
 
 import java.io.Serial;
@@ -27,6 +28,8 @@ public class ProductDto implements Serializable {
     private String skuCode;
 
     private String description;
+
+    private ProductMetaData productMetaData;
 
     private String image;
 

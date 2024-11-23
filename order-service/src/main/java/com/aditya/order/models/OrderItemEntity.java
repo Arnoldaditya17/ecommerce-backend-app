@@ -1,12 +1,12 @@
 package com.aditya.order.models;
 
+import com.aditya.inventory.models.InventoryEntity;
 import com.aditya.order.constants.OrderConstants;
 import com.aditya.order.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Data;
-
 
 import java.util.Date;
 import java.util.UUID;
@@ -17,44 +17,71 @@ import java.util.UUID;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class OrderItemEntity {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.UUID)
+	private UUID id;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+	@Column()
+	private String skuCode;
 
-    private String skuCode;
+	@Column()
+	private int quantity;
 
-    private int quantity;
+	@Column()
+	private Double marketPrice = 0d;
 
-    private Double mrpGrossAmount = 0d;
+	@Column()
+	private Double salePrice = 0d;
 
-    private Double marketPrice;
+	@Column()
+	private Double mrpGrossAmount = 0d;
 
-    private Double spGrossAmount = 0d;
+	@Column()
+	private Double spGrossAmount = 0d;
 
-    @Enumerated(EnumType.STRING)
-    private OrderStatus itemStatus;
+	@Column()
+	private Double finalAmount = 0d;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id",nullable = false)
-    private OrderEntity orderEntity;
+	@Column()
+	private Double totalDiscountAmount = 0d;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt;
+	@Enumerated(EnumType.STRING)
+	private OrderStatus itemStatus;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updatedAt;
+	@Column(name = "order_id")
+	private UUID orderId;
 
-    @PrePersist
-    protected void onCreate() {
-        createdAt = new Date();
-    }
+	@ManyToOne
+	@JoinColumn(name = "order_id", nullable = false)
+	private OrderEntity orderEntity;
 
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = new Date();
-    }
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdAt;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updatedAt;
 
+	@PrePersist
+	protected void onCreate() {
+		createdAt = new Date();
+	}
+
+	@PreUpdate
+	protected void onUpdate() {
+		updatedAt = new Date();
+	}
+
+	public static OrderItemEntity createOrderItem(InventoryEntity inventory, int quantity) {
+		OrderItemEntity orderItem = newInstance();
+		orderItem.setSkuCode(inventory.getSkuCode());
+		orderItem.setMarketPrice(inventory.getMarketPrice());
+		orderItem.setSalePrice(inventory.getSalePrice());
+		orderItem.setQuantity(quantity);
+		return orderItem;
+	}
+
+	public static OrderItemEntity newInstance() {
+		return new OrderItemEntity();
+	}
 
 }

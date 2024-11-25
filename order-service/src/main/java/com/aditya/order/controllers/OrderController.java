@@ -4,7 +4,6 @@ import com.aditya.order.dtos.CartRequest;
 import com.aditya.order.enums.OrderStatus;
 import com.aditya.order.models.OrderEntity;
 import com.aditya.order.services.CartService;
-import com.aditya.order.services.OrderService;
 import com.aditya.user.models.User;
 import com.aditya.user.services.auth.UserService;
 import org.springframework.http.HttpStatus;
@@ -18,14 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/orders")
 public class OrderController {
 
-	private final OrderService orderService;
-
 	private final CartService cartService;
 
 	private final UserService userService;
 
-	public OrderController(OrderService orderService, CartService cartService, UserService userService) {
-		this.orderService = orderService;
+	public OrderController(CartService cartService, UserService userService) {
 		this.cartService = cartService;
 		this.userService = userService;
 	}
@@ -33,7 +29,7 @@ public class OrderController {
 	@PostMapping("/cart")
 	public ResponseEntity<OrderEntity> createCart(@RequestBody CartRequest cartRequest) {
 		User user = userService.getCurrentSessionUser();
-		// Fetch inventory and validate stock
+
 		OrderEntity cart = cartService.getCustomerCurrentCart(user.getId());
 		if (cart == null) {
 			cart = new OrderEntity();

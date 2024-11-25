@@ -54,12 +54,10 @@ public class PricingService {
 			BigDecimal mpGrossAmount = marketPrice.multiply(quantity);
 			BigDecimal discount = mpGrossAmount.subtract(spGrossAmount);
 
-			BigDecimal finalAmount = spGrossAmount;
-
 			orderItem.setSpGrossAmount(setScale(spGrossAmount));
 			orderItem.setMrpGrossAmount(setScale(mpGrossAmount));
 			orderItem.setTotalDiscountAmount(setScale(discount));
-			orderItem.setFinalAmount(setScale(finalAmount));
+			orderItem.setFinalAmount(setScale(spGrossAmount));
 		}
 	}
 

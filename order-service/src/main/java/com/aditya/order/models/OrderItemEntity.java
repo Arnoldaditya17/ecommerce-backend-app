@@ -21,34 +21,34 @@ public class OrderItemEntity {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID id;
 
-	@Column()
+	@Column(name = "sku_code")
 	private String skuCode;
 
-	@Column()
+	@Column(name = "quantity")
 	private int quantity;
 
-	@Column()
-	private Double marketPrice = 0d;
+	@Column(name = "market_price")
+	private Double marketPrice;
 
-	@Column()
-	private Double salePrice = 0d;
+	@Column(name = "sale_price")
+	private Double salePrice;
 
-	@Column()
-	private Double mrpGrossAmount = 0d;
+	@Column(name = "mrp_gross_amount")
+	private Double mrpGrossAmount;
 
-	@Column()
-	private Double spGrossAmount = 0d;
+	@Column(name = "sp_gross_amount")
+	private Double spGrossAmount;
 
-	@Column()
-	private Double finalAmount = 0d;
+	@Column(name = "final_amount")
+	private Double finalAmount;
 
-	@Column()
-	private Double totalDiscountAmount = 0d;
+	@Column(name = "total_discount_amount")
+	private Double totalDiscountAmount;
 
 	@Enumerated(EnumType.STRING)
 	private OrderStatus itemStatus;
 
-	@Column(name = "order_id")
+	@Column(name = "order_id", insertable = false, updatable = false)
 	private UUID orderId;
 
 	@ManyToOne

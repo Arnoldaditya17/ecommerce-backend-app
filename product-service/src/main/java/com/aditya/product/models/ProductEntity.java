@@ -27,17 +27,22 @@ public class ProductEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "market_price")
     private Double marketPrice;
 
+    @Column(name = "sale_price")
     private Double salePrice;
 
-    @Column(unique = true, nullable = false)
+    @Column(name = "sku_code", unique = true, nullable = false)
     private String skuCode;
 
+    @Column(name = "description")
     private String description;
 
+    @Column(name = "image")
     private String image;
 
     @Temporal(TemporalType.TIMESTAMP)
